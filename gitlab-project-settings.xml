@@ -1,0 +1,16 @@
+<application>
+  <component name="SettingsState">
+    <option name="host" value="https://gitlab.com" />
+    <option name="token" value="YMt8_LRAipRafPeKR2Kk" />
+    <option name="projects">
+      <list>
+        <ProjectDto>
+          <option name="httpUrl" value="https://gitlab.com/sagar_spkt/stu_teach.git" />
+          <option name="name" value="stu_teach" />
+          <option name="namespace" value="sagar_spkt" />
+          <option name="sshUrl" value="git@gitlab.com:sagar_spkt/stu_teach.git" />
+        </ProjectDto>
+      </list>
+    </option>
+  </component>
+</application>
