@@ -5,9 +5,9 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     location = models.CharField(max_length=100)
-    avatar = models.ImageField(upload_to='profile_image', blank=True)  # TODO Media URL setting
+    avatar = models.ImageField(upload_to='profile_image', blank=True)
     user_type = models.CharField(max_length=50)  # TODO find field for user_type
 
     def __str__(self):

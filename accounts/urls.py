@@ -9,4 +9,5 @@ urlpatterns = [
         template_name='accounts/login.html'
     ), name='login'),
     path('signup/', accounts_views.signup, name='signup'),
+    path('edit-profile', accounts_views.edit_profile, name='edit_profile')
 ]

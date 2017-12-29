@@ -1,3 +1,7 @@
 .idea
 venv
 *.sqlite3
+__pycache__/
+media/
+*.jpg
+*.py[cod]
