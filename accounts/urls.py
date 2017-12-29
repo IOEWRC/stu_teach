@@ -8,5 +8,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(
         template_name='accounts/login.html'
     ), name='login'),
-    # Add signup url here
+    path('signup/', accounts_views.signup, name='signup'),
 ]

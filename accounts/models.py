@@ -7,8 +7,11 @@ from django.dispatch import receiver
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=100)
-    # avatar = models.ImageField(upload_to='profile_image', blank=True)  # TODO Media URL setting
+    avatar = models.ImageField(upload_to='profile_image', blank=True)  # TODO Media URL setting
     user_type = models.CharField(max_length=50)  # TODO find field for user_type
+
+    def __str__(self):
+        return self.user.username
 
 
 @receiver(post_save, sender=User)
