@@ -11,9 +11,8 @@ class UserProfile(models.Model):
     user_type = models.CharField(max_length=50)  # TODO find field for user_type
 
 
+@receiver(post_save, sender=User)
 def create_profile(sender, **kwargs):
     if kwargs['created']:
         user_profile = UserProfile.objects.create(user=kwargs['instance'])
 
-
-post_save(create_profile, sender=User)
