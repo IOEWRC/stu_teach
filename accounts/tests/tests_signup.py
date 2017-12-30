@@ -43,7 +43,7 @@ class SuccessfulSignUpTests(TestCase):
             'password1': 'testpassword1234',
             'password2': 'testpassword1234',
         })
-        self.sign_up_redirect_url = reverse('accounts:login')
+        self.sign_up_redirect_url = reverse('forum:home')  # TODO new redirect url might required
 
     def test_status_code(self):
         self.assertEqual(self.response.status_code, 302)
@@ -54,8 +54,11 @@ class SuccessfulSignUpTests(TestCase):
     def test_user_creation(self):
         self.assertTrue(User.objects.exists())
 
+    def test_user_profile_creation(self):
+        pass  # TODO
+
     def test_user_authentication(self):
-        response = self.client.get(reverse('accounts:edit_profile'))  # TODO better use sign up redirect url
+        response = self.client.get(self.sign_up_redirect_url)
         user = response.context['user']
         self.assertTrue(user.is_authenticated)
 

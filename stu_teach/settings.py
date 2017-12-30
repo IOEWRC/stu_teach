@@ -126,5 +126,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = ''  # TODO add login redirect url
+LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'accounts:login'

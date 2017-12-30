@@ -18,7 +18,8 @@ urlpatterns = [
     path('reset-password/done', auth_views.password_change_done, {'template_name': 'accounts/password_reset_done.html'},
          name='password_reset_done'),
     re_path(r'^reset-password/confirm/(?P<uidb64>[0-9a-zA-Z]+)-(?P<token>.+)/$', auth_views.password_reset_confirm,
-            {'post_reset_redirect': 'accounts:password_reset_complete'}, name='password_reset_confirm'),
+            {'post_reset_redirect': 'accounts:password_reset_complete',
+             'template_name': 'accounts/password_reset_confirm.html'}, name='password_reset_confirm'),
     path('reset-password/complete', auth_views.password_reset_complete,
          {'template_name': 'accounts/password_reset_complete.html'}, name='password_reset_complete'),
 ]
