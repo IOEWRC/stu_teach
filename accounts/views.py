@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
-from accounts.form import SignupForm, UserForm, ProfileForm
+from accounts.forms import SignupForm, UserForm, ProfileForm
 from django.contrib.auth import authenticate
 
 
@@ -12,7 +12,7 @@ def signup(request):
             user.email = form.cleaned_data['email']
             user.save()
             login(request, user)
-            return redirect('accounts:login')  # TODO sign up redirect url
+            return redirect('accounts:login')  # TODO sign up redirect url, edit in test also
         else:
             return render(request, 'accounts/signup.html', {'form': form})
     else:
