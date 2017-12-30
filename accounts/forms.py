@@ -22,3 +22,5 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['location', 'avatar', 'user_type']
+
+

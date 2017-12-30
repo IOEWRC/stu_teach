@@ -8,6 +8,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(
         template_name='accounts/login.html'
     ), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout'),
     path('signup/', accounts_views.signup, name='signup'),
     path('edit-profile/', accounts_views.edit_profile, name='edit_profile'),
     path('profile/edit-profile/', accounts_views.edit_profile, name='edit_profile'),
@@ -22,4 +23,7 @@ urlpatterns = [
              'template_name': 'accounts/password_reset_confirm.html'}, name='password_reset_confirm'),
     path('reset-password/complete/', auth_views.password_reset_complete,
          {'template_name': 'accounts/password_reset_complete.html'}, name='password_reset_complete'),
+    path('change-password/', accounts_views.change_password, name='change_password'),
+    path('profile/', accounts_views.view_profile, name='view_profile'),
+    path('profile/<int:pk>/', accounts_views.view_profile, name='view_profile_with_pk'),
 ]
