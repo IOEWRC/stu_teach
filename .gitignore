@@ -2,7 +2,6 @@
 venv
 *.sqlite3
 **/__pycache__/
-__pycache__/
 **/media/
 *.jpg
 *.py[cod]
