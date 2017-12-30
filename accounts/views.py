@@ -1,7 +1,6 @@
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from accounts.forms import SignupForm, UserForm, ProfileForm
-from django.contrib.auth import authenticate
 
 
 def signup(request):
@@ -12,12 +11,10 @@ def signup(request):
             user.email = form.cleaned_data['email']
             user.save()
             login(request, user)
-            return redirect('accounts:login')  # TODO sign up redirect url, edit in test also
-        else:
-            return render(request, 'accounts/signup.html', {'form': form})
+            return redirect('forum:home')  # TODO sign up redirect url, edit in test also
     else:
         form = SignupForm()
-        return render(request, 'accounts/signup.html', {'form': form})
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 def edit_profile(request):
@@ -27,7 +24,7 @@ def edit_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('accounts:edit_profile')
+            return redirect('forum:home')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
