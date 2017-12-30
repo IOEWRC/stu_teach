@@ -3,6 +3,7 @@ from django.test import TestCase
 from accounts.forms import SignupForm
 from django.contrib.auth.models import User
 from accounts.views import signup
+from accounts.models import UserProfile
 
 
 class SignUpViewTests(TestCase):
@@ -52,10 +53,12 @@ class SuccessfulSignUpTests(TestCase):
         self.assertRedirects(self.response, self.sign_up_redirect_url)
 
     def test_user_creation(self):
+        user = User.objects.get(username='test_user')
         self.assertTrue(User.objects.exists())
+        self.assertIsNotNone(user.profile)
 
     def test_user_profile_creation(self):
-        pass  # TODO
+        self.assertTrue(UserProfile.objects.exists())
 
     def test_user_authentication(self):
         response = self.client.get(self.sign_up_redirect_url)
