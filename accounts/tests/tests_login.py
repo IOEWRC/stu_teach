@@ -13,7 +13,7 @@ class LoginViewTests(TestCase):
         self.assertEqual(self.response.status_code, 200)
 
     def test_signup_url_resolves_login_view(self):
-        view = resolve('/accounts/login/')
+        view = resolve(reverse('accounts:login'))
         self.assertEqual(view.func.view_class, auth_views.LoginView)
 
     def test_csrf(self):
