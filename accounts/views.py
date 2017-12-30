@@ -1,6 +1,7 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from accounts.forms import SignupForm, UserForm, ProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 def signup(request):
@@ -32,3 +33,15 @@ def edit_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            logout(request)
+            return redirect('accounts:logout')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request, 'accounts/change_password.html',{'form': form})
