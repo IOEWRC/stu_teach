@@ -2,7 +2,8 @@ from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from accounts.forms import SignupForm, UserForm, ProfileForm
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 def signup(request):
     if request.method == 'POST':
@@ -45,3 +46,11 @@ def change_password(request):
     else:
         form = PasswordChangeForm(user=request.user)
     return render(request, 'accounts/change_password.html',{'form': form})
+
+
+def view_profile(request, pk=None):
+    if pk:
+        user = get_object_or_404(User, pk=pk)
+    else:
+        user = request.user
+    return render(request, 'accounts/user_profile.html', {'user': user})
