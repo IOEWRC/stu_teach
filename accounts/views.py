@@ -36,18 +36,6 @@ def edit_profile(request):
     })
 
 
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            logout(request)
-            return redirect('accounts:logout')
-    else:
-        form = PasswordChangeForm(user=request.user)
-    return render(request, 'accounts/change_password.html',{'form': form})
-
-
 def view_profile(request, pk=None):
     if pk:
         user = get_object_or_404(User, pk=pk)
