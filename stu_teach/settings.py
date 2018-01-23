@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

@@ -13,7 +13,7 @@ urlpatterns = [
     path('edit-profile/', accounts_views.edit_profile, name='edit_profile'),
     path('profile/edit-profile/', accounts_views.edit_profile, name='edit_profile'),
     path('reset-password/', auth_views.PasswordResetView.as_view(
-        success_url=reverse_lazy('accountse:password_reset_done'),
+        success_url=reverse_lazy('accounts:password_reset_done'),
         email_template_name='accounts/password_reset_email.html',
         template_name='accounts/password_reset.html'), name='password_reset'),
     path('reset-password/done/', auth_views.PasswordResetDoneView.as_view(
