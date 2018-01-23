@@ -19,7 +19,7 @@ class PasswordResetViewTests(TestCase):
 
     def test_url_resolves_to_view_function(self):
         view = resolve(reverse('accounts:password_reset'))
-        self.assertEqual(view.func.view_class, auth_views.PasswordResetView)
+        self.assertEqual(view.func, auth_views.password_reset)
 
     def test_csrf(self):
         self.assertContains(self.response, 'csrfmiddlewaretoken')
@@ -46,7 +46,7 @@ class SuccessfulPasswordResetTests(TestCase):
             self.response,
             reverse('accounts:password_reset_done'),
             status_code=302,
-            target_status_code=200
+            target_status_code=302
         )
 
     def test_send_password_reset_email(self):
@@ -64,7 +64,7 @@ class InvalidPasswordResetTests(TestCase):
             self.response,
             reverse('accounts:password_reset_done'),
             status_code=302,
-            target_status_code=200
+            target_status_code=302
         )
 
     def test_no_reset_email_sent(self):
