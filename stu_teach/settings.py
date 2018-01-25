@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
+    # 'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'widget_tweaks',
 ]
@@ -123,13 +123,13 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'stu.teach.email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'stu_teach123456'
-# EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'stu.teach.email@gmail.com'
+EMAIL_HOST_PASSWORD = 'stu_teach123456'
+EMAIL_PORT = 587
 
 # INCLUDE_AUTH_URLS = True
 # INCLUDE_REGISTER_URL = False
@@ -144,3 +144,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
+
+# for both username and email login
+AUTHENTICATION_BACKENDS = (
+    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)
