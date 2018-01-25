@@ -1,4 +1,5 @@
 Django==2.0
+django-widget-tweaks==1.4.1
 olefile==0.44
 Pillow==4.3.0
 pytz==2017.3
