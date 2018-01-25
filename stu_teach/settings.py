@@ -32,12 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    # 'django.contrib.sites',
+    'registration_redux',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
+    # 'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'widget_tweaks',
 ]
@@ -122,10 +124,23 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'stu.teach.email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'stu_teach123456'
+# EMAIL_PORT = 587
+
+# INCLUDE_AUTH_URLS = True
+# INCLUDE_REGISTER_URL = False
+
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_FORM = 'registration_redux.forms.CustomRegistrationForm'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
-LOGIN_URL = 'accounts:login'
+LOGIN_URL = 'auth_login'
