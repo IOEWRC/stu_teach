@@ -24,3 +24,8 @@ urlpatterns = [
     path('home/', include('forum.urls')),
     path('account/', include('registration_redux.backends.default.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'forum.views.error_404'
+handler500 = 'forum.views.error_500'
+handler400 = 'forum.views.error_400'
+handler403 = 'forum.views.error_403'

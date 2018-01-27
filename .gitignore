@@ -5,4 +5,5 @@ venv
 **/media/
 *.jpg
 *.py[cod]
-.env
+*.env
+local.py
