@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stu_teach.urls'
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'stu_teach.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'stu_teach/../templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -121,7 +122,17 @@ REGISTRATION_FORM = 'registration_redux.forms.CustomRegistrationForm'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
+
+# for both username and email login
+AUTHENTICATION_BACKENDS = (
+    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)

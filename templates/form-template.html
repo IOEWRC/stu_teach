@@ -7,6 +7,9 @@
      {% endfor %}
      </div>
 {% endif %}
+{% if error_message %}
+  {{error_message}}
+{% endif %}
 {% for field in form %}
   <div class="form-group">
     {{ field.label_tag }}

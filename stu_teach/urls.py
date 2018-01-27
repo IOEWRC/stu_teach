@@ -17,15 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('account/', include('accounts.urls')),
     path('home/', include('forum.urls')),
     path('account/', include('registration_redux.backends.default.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', views.landing_page)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-handler404 = 'forum.views.error_404'
-handler500 = 'forum.views.error_500'
-handler400 = 'forum.views.error_400'
-handler403 = 'forum.views.error_403'
+handler404 = 'stu_teach.views.error_404'
+handler500 = 'stu_teach.views.error_500'
+handler400 = 'stu_teach.views.error_400'
+handler403 = 'stu_teach.views.error_403'

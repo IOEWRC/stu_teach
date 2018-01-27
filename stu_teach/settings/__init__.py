@@ -3,5 +3,5 @@ from .prod import *
 
 try:
     from .local import *
-except _:
+except ImportError:
     pass
