@@ -141,6 +141,7 @@ REGISTRATION_FORM = 'registration_redux.forms.CustomRegistrationForm'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
@@ -148,3 +149,8 @@ LOGIN_URL = 'auth_login'
 # for both username and email login
 AUTHENTICATION_BACKENDS = (
     'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
