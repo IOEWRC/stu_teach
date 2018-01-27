@@ -58,7 +58,7 @@ ROOT_URLCONF = 'stu_teach.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'stu_teach/../templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -132,3 +132,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
+
+# for both username and email login
+AUTHENTICATION_BACKENDS = (
+    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)
