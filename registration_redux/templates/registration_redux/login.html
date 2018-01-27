@@ -2,7 +2,6 @@
 {% load i18n %}
 
 {% block title %}{% trans "Log in" %}{% endblock %}
-
 {% comment %}
 <form method="post" action="">
     {% csrf_token %}
@@ -14,35 +13,32 @@
 <p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>
 <p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p>
 {% endcomment %}
-
 {% block content %}
-    <br><br>
+  <br><br>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-8">
-        <div class="card">
+        <div class="card card-1">
+          <h3 class="card-custom-header">LOG IN</h3>
           <div class="card-body">
-            <h3 class="card-title">Log in</h3>
             <form method="post" novalidate>
               {% csrf_token %}
               {% include 'form-template.html' %}
-                <button type="submit" class="btn btn-dark btn-block">Log in</button>
+                <button type="submit" class="button button1 btn-block">Log in</button>
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
           </div>
-          <div class="card-footer text-muted text-center">
+          <div class="text-muted text-center card-custom-footer">
             Not a member? <a href="{% url 'registration_register' %}">Sign up</a>
-          </div>
-        </div>
-        <div class="text-center py-2">
-          <small>
-            <a href="{% url 'auth_password_reset' %}" class="text-muted">Forgot your password?</a>
+            <br>
+            <small>
+            <a href="{% url 'auth_password_reset' %}" class="text-info">Forgot your password?</a>
           </small>
+          </div>
         </div>
       </div>
     </div>
   </div>
-    <br><br>
 {% endblock %}
 
 

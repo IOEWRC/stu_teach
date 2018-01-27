@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "STU-TEACH" %}{% endblock %}
+
+{%block content%}
+
+    <div class="jumbotron hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-push-7 phone-preview">
+                    <div class="iphone-mockup">
+                        <div class="screen"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-pull-3 get-it">
+                    <h1>WELCOME TO STU-TEACH</h1>
+                    <p>A teacher -student discussion forum.</p>
+                    <p><a class="btn button1 btn-lg" role="button" href="{% url 'auth_login' %}">LOGIN </a><a class="btn button1 btn-lg" role="button" href="{% url 'registration_register' %}">REGISTER </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="testimonials">
+        <h2 class="text-center">Teacher-Student </h2>
+        <blockquote>
+            <p>write something if you want</p>
+            <footer>by pawan</footer>
+        </blockquote>
+    </section>
+{%endblock%}
