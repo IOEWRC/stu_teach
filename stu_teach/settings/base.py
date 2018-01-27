@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'widget_tweaks',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -134,5 +137,4 @@ LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
 
 # for both username and email login
-AUTHENTICATION_BACKENDS = (
-    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)
+
