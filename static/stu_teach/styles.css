@@ -6,7 +6,7 @@ body {
 /* for buttton */
 
  .button {
-    background-color: #241D1; /* Green */
+    background-color: green; /* Green */
     border: none;
     color: white;
     padding: 16px 32px;

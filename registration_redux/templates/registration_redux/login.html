@@ -27,6 +27,8 @@
                 <button type="submit" class="button button1 btn-block">Log in</button>
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
+              <p><strong><a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-secondary">Login With Google</a></strong></p>
+              <p><strong><a href="{% url 'social:begin' 'github' %}" class="btn btn-secondary">Login With GitHub</a></strong></p>
           </div>
           <div class="text-muted text-center card-custom-footer">
             Not a member? <a href="{% url 'registration_register' %}">Sign up</a>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'widget_tweaks',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'stu_teach.urls'
@@ -67,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -132,7 +136,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
-
-# for both username and email login
-AUTHENTICATION_BACKENDS = (
-    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',)
+LOGOUT_URL = 'auth_logout'
