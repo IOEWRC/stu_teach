@@ -1,10 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
 
-    Username: {{user.username}}<hr><br>
-    Email: {{user.email}}<hr><br>
-    Location: {{user.profile.location}}<hr><br>
-    Avatar :
-    {% if  user.profile.avatar %}
-         <img src="{{user.profile.avatar.url}}">
-    {% endif %}
-    <br><hr>
-    User Type: {{user.profile.user_type}}<hr><br>
+{% block title %}{% trans "User Profile" %}{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+          <div class="card card-info card-1">
+            <div class="card-custom-header">
+              <h3 class="card-title">{{user.first_name}}'s Profile</h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-5 " align="center">
+                    {%if user.profile.avatar%}
+                        <img alt="User Pic" src="{{user.profile.avatar.url}}" class="img-responsive img-fluid card-img-overlay">
+                    {%endif%}
+
+                </div>
+                <div class=" col-md-9 col-lg-7 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Username:</td>
+                        <td>{{user.username}}</td>
+                      </tr>
+                      <tr>
+                        <td>Name:</td>
+                        <td>{{user.first_name}} {{user.last_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Email:</td>
+                        <td>{{user.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>Location:</td>
+                        <td>{{user.profile.location}}</td>
+                      </tr>
+
+                         <tr>
+                             <tr>
+                        <td>User Type:</td>
+                        <td>{{user.profile.user_type}}</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+                 <div class="card-custom-footer">
+                  <a href="{% url 'edit_profile'%}" class="button button1" style="float: right;border-radius: 50%; margin-right: 30px;">Edit Profile</a>
+                    </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
