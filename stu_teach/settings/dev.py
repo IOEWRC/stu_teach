@@ -1,0 +1,1 @@
+from stu_teach.settings.base import *
