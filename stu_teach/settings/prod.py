@@ -3,8 +3,8 @@ import dj_database_url
 from decouple import config
 
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+DEBUG = True
+ALLOWED_HOSTS = []
 
 
 # CORS_REPLACE_HTTPS_REFERER = True
@@ -43,8 +43,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
     'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',
 )
 

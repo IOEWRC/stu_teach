@@ -29,6 +29,22 @@ class PasswordChangeFormOverrided(PasswordChangeForm):
     )
 
 
+class UserForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['location', 'avatar', ]  # TODO Think about user type again
+
+
 class RegistrationForm(UserCreationForm):
     """
     Form for registering a new user account.
@@ -130,22 +146,6 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
 class ResendActivationForm(forms.Form):
     required_css_class = 'required'
     email = forms.EmailField(label=_("E-mail"))
-
-
-class UserForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=30, required=True)
-    last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
-
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ['location', 'avatar', 'user_type']
 
 
 class CustomRegistrationForm(

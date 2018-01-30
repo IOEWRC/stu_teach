@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Class List{% endblock %}
+
+{% block content %}
+    <a href="{% url 'forum:class_create' %}" class="btn btn-primary">Create Class</a>
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Classes</th>
+            <th>Posts</th>
+            <th>Last Post</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cl in classes %}
+                <tr>
+                    <td>
+                        <a href="#">{{ cl.name }}</a>
+                        <small class="text-muted d-block">{{ cl.description }}</small>
+                    </td>
+                    <td class="align-middle">{# TODO Get post count in class #}#</td>
+                    <td class="align-middle">{# TODO Get last post in the class #}</td>
+                    <td class="align-middle">
+                        <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
