@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
     <p>Teacher Student Discussion</p>
-<p>{{ user.username }}
+<p>{{ user.username }}</p>
+    <p><a href="{% url 'forum:class_list' %}">View Available Classes</a> </p>
 {% endblock %}
