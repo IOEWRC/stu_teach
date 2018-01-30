@@ -143,6 +143,9 @@ class UserForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
+
+    user_type = forms.ChoiceField(choices=(('Teacher', 'Teacher'), ('Student', 'Student')))
+
     class Meta:
         model = UserProfile
         fields = ['location', 'avatar', 'user_type']
