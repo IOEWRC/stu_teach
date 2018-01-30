@@ -6,6 +6,7 @@ defusedxml==0.5.0
 dj-database-url==0.4.2
 dj-static==0.0.6
 Django==2.0.1
+django-b2storage==1.0
 django-widget-tweaks==1.4.1
 gunicorn==19.7.1
 html5lib==1.0.1
@@ -16,6 +17,7 @@ Pillow==5.0.0
 psycopg2==2.7.3.2
 PyJWT==1.5.3
 python-decouple==3.1
+python-social-auth==0.3.6
 python3-openid==3.1.0
 pytz==2017.3
 requests==2.18.4

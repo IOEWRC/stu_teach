@@ -6,7 +6,7 @@ body {
 /* for buttton */
 
  .button {
-    background-color: green; /* Green */
+    background-color: #241D1; /* Green */
     border: none;
     color: white;
     padding: 16px 32px;
@@ -139,9 +139,10 @@ body {
 }
 
 @media (min-width:768px) {
-  .footer .social-icons{
-    text-align:right;
-  }
+    .footer .social-icons {
+        text-align: right;
+    }
+}
 /* for landing page */
 .hero{
   background:url(images/city_bg.jpg) no-repeat center;
