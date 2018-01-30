@@ -34,7 +34,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     location = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='profile_image', blank=True)
-    user_type = models.CharField(max_length=50)  # TODO find field for user_type
+    user_type = models.CharField(max_length=50, choices=(('STUDENT', 'Student'), ('TEACHER', 'Teacher')))  # TODO find field for user_type
 
     def __str__(self):
         return self.user.username

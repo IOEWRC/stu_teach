@@ -25,12 +25,9 @@ urlpatterns = [
     # path('account/', include('accounts.urls')),
     path('home/', include('forum.urls')),
     path('account/', include('registration_redux.backends.default.urls')),
-    path('socio-auth/', include('social_django.urls', namespace='social')),
-    path('', views.landing_page)
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', views.landing_page),
+    path('auth/', include('social_django.urls', namespace='social')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'stu_teach.views.error_404'
 handler500 = 'stu_teach.views.error_500'
