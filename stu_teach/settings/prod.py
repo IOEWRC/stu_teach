@@ -3,8 +3,8 @@ import dj_database_url
 from decouple import config
 
 
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
 
 # CORS_REPLACE_HTTPS_REFERER = True
@@ -37,17 +37,12 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 
+#for hosting media files
+# Do not change any of these names
+B2_BUCKET_NAME = config('HB2_B2_BUCKET_NAME')
+B2_BUCKET_ID = config('HB2_B2_BUCKET_ID')
+B2_ACCOUNT_ID = config('HB2_B2_ACCOUNT_ID')
+B2_APPLICATION_KEY = config('HB2_B2_APP_KEY')
+DEFAULT_FILE_STORAGE = 'django_b2storage.backblaze_b2.B2Storage'
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.github.GithubOAuth2',
-    'registration_redux.backends.emailOrUsernameBackend.EmailOrUsernameModelBackend',
-)
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-
-SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
-SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
