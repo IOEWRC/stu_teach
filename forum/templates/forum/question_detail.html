@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{ question.title }}</h1>
+    <p>Class room: {{ question.class_room.name }}</p>
+    <p>Instruction: {{ question.instruction }}</p>
+    <small>Question By: {{ question.created_by.get_full_name }} {{ question.created_at.date }}</small>
+    <a href="{% url 'forum:question_update' pk=question.pk %}" class="button button1">Update Question</a>
+    <a href="{% url 'forum:question_delete' pk=question.pk %}" class="button button1">Delete Question</a>
+
+{% endblock %}
