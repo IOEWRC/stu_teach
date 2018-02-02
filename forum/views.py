@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, DeleteView
-from .models import Class
+from django.views.generic import ListView, CreateView, DeleteView, DetailView
+from .models import Class, Question
 from django.urls import reverse_lazy
 
 
@@ -13,7 +13,7 @@ class ClassListView(ListView):
 class ClassCreateView(CreateView):
     model = Class
     # Either use form class or fields
-    fields = ['name', 'description', ]
+    fields = ['name', 'description', 'class_avatar', ]
     template_name = 'forum/class_create.html'
 
     def form_valid(self, form):
@@ -21,11 +21,27 @@ class ClassCreateView(CreateView):
         return super().form_valid(form)
 
 
+class ClassDetailView(DetailView):
+    model = Class
+    context_object_name = 'class'
+    template_name = 'forum/class_detail.html'
+
+
 class ClassDeleteView(DeleteView):
     model = Class
     success_url = reverse_lazy('forum:class_list')
 
 
+class QuestionCreateView(CreateView):
+    model = Question
+    fields = ['title', 'instruction', ]
+    template_name = 'forum/question_create.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.class_room = Class.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+
 def home(request):
     return render(request, 'forum/home.html', {'user': request.user, })
-

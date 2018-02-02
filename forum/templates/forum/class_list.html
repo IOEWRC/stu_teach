@@ -8,6 +8,8 @@
         <thead class="thead-inverse">
         <tr>
             <th>Classes</th>
+            <th>Teacher</th>
+            <th>Created At</th>
             <th>Posts</th>
             <th>Last Post</th>
             <th>Action</th>
@@ -17,11 +19,13 @@
             {% for cl in classes %}
                 <tr>
                     <td>
-                        <a href="#">{{ cl.name }}</a>
+                        <a href="{% url 'forum:class_detail' pk=cl.pk %}">{{ cl.name }}</a>
                         <small class="text-muted d-block">{{ cl.description }}</small>
                     </td>
+                    <td class="align-middle"><a href="{% url 'view_others_profile' pk=cl.created_by.pk %}">{{ cl.created_by.get_full_name }}</a></td>
+                    <td class="align-middle">{{ cl.created_at.date }}</td>
                     <td class="align-middle">{# TODO Get post count in class #}#</td>
-                    <td class="align-middle">{# TODO Get last post in the class #}</td>
+                    <td class="align-middle">{# TODO Get last post in the class #}#</td>
                     <td class="align-middle">
                         <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
                     </td>

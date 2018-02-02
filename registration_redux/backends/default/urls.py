@@ -27,6 +27,7 @@ from .views import RegistrationView
 from .views import ResendActivationView
 
 from ...views import edit_profile, view_profile
+from django.urls import path
 
 urlpatterns = [
     url(r'^activate/complete/$',
@@ -50,7 +51,7 @@ urlpatterns = [
         name='registration_disallowed'),
     url(r'^edit-profile/$', edit_profile, name='edit_profile'),
     url(r'^profile/$', view_profile, name='view_self_profile'),
-    url(r'^profile/(?P<pk>)/$', view_profile, name='view_others_profile'),
+    path('profile/<int:pk>/', view_profile, name='view_others_profile'),
 ]
 
 if getattr(settings, 'INCLUDE_REGISTER_URL', True):
