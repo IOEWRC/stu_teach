@@ -10,4 +10,7 @@ urlpatterns = [
     path('classes/create/', views.ClassCreateView.as_view(), name='class_create'),
     path('classes/delete/<int:pk>/', views.ClassDeleteView.as_view(), name='class_delete'),
     path('classes/questions/<int:pk>/', views.QuestionCreateView.as_view(), name='question_create'),
+    path('classes/question/detail/<int:pk>/', views.QuestionDetailView.as_view(), name='question_detail'),
+    path('classes/question/update/<int:pk>/', views.QuestionUpdateView.as_view(), name='question_update'),
+    path('classes/question/delete/<int:pk>/', views.QuestionDeleteView.as_view(), name='question_delete'),
 ]

@@ -10,8 +10,8 @@
             <th>Classes</th>
             <th>Teacher</th>
             <th>Created At</th>
-            <th>Posts</th>
-            <th>Last Post</th>
+            <th>Questions</th>
+            <th>Last Question</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -24,8 +24,8 @@
                     </td>
                     <td class="align-middle"><a href="{% url 'view_others_profile' pk=cl.created_by.pk %}">{{ cl.created_by.get_full_name }}</a></td>
                     <td class="align-middle">{{ cl.created_at.date }}</td>
-                    <td class="align-middle">{# TODO Get post count in class #}#</td>
-                    <td class="align-middle">{# TODO Get last post in the class #}#</td>
+                    <td class="align-middle">{{ cl.question_set.count }}</td>
+                    <td class="align-middle"><a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}</a> </td>  {# TODO #}
                     <td class="align-middle">
                         <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
                     </td>
