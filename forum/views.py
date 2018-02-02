@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
-from .models import Class
-from django.views.generic import ListView, CreateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
 from .models import Class, Question
 from django.urls import reverse_lazy
 
@@ -43,6 +41,24 @@ class QuestionCreateView(CreateView):
         form.instance.created_by = self.request.user
         form.instance.class_room = Class.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
+
+
+class QuestionDetailView(DetailView):
+    model = Question
+    template_name = 'forum/question_detail.html'
+
+
+class QuestionUpdateView(UpdateView):
+    model = Question
+    fields = ['title', 'instruction', ]
+    template_name = 'forum/question_update.html'
+
+
+class QuestionDeleteView(DeleteView):
+    model = Question
+
+    def get_success_url(self):
+        return reverse_lazy('forum:class_detail', kwargs={'pk': self.get_object().class_room.pk})
 
 
 class ClassUpdateView(UpdateView):

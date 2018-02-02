@@ -11,4 +11,7 @@ urlpatterns = [
     path('classes/delete/<int:pk>/', views.ClassDeleteView.as_view(), name='class_delete'),
     path('classes/questions/<int:pk>/', views.QuestionCreateView.as_view(), name='question_create'),
     path('classes/update/<int:pk>/', views.ClassUpdateView.as_view(), name='class_update'),
+    path('classes/question/detail/<int:pk>/', views.QuestionDetailView.as_view(), name='question_detail'),
+    path('classes/question/update/<int:pk>/', views.QuestionUpdateView.as_view(), name='question_update'),
+    path('classes/question/delete/<int:pk>/', views.QuestionDeleteView.as_view(), name='question_delete'),
 ]

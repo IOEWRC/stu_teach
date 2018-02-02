@@ -7,4 +7,8 @@
     <p>Teacher: <a href="{% url 'view_others_profile' pk=class.created_by.pk %}">{{ class.created_by.get_full_name }}</a></p>
     <p>Class Created At: {{ class.created_at }}</p>
     <p><a href="{% url 'forum:question_create' pk=class.pk %}">Ask a question here.</a> </p>
+
+    {% for question in class.question_set.all %}
+        <p><a href="{% url 'forum:question_detail' pk=question.pk %}">{{ question.title }}</a></p>
+    {% endfor %}
 {% endblock %}
