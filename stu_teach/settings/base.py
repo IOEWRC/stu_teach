@@ -51,6 +51,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+
+    'stu_teach.middleware.LoginRequiredMiddleWare',
 ]
 
 ROOT_URLCONF = 'stu_teach.urls'
@@ -135,3 +137,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
 LOGIN_URL = 'auth_login'
 LOGOUT_URL = 'auth_logout'
+
+LOGIN_EXEMPT_VIEWS = [
+    'landing_page',
+]
