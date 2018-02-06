@@ -34,7 +34,7 @@
                         {% endif %}
                     </td>
                     <td class="align-middle">
-                        <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
+                        <a href="{% url 'forum:class_update' pk=cl.pk %}" class="btn btn-primary">Update</a>|<a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

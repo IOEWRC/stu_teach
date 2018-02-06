@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>{{ answer.body }}</p>
+    <p>{% if answer.files %}<a href="{{ answer.files.url }}">Attached Files</a>{% endif %}</p>
+    <p>Answered By: {{ answer.created_by }} at  {{ answer.created_at.date }}</p>
+    <a href="{% url 'forum:answer_update' pk=answer.pk %}">Edit</a>|
+    <a href="{% url 'forum:answer_delete' pk=answer.pk %}">Delete</a>
+    <hr>
+    <a href="{% url 'forum:reply_create' pk=answer.pk %}">Reply</a>
+    Replies:<br>
+    {% for reply in answer.reply_set.all %}
+        <p>{{ reply.body }}</p>
+        <p>Replied By: {{ reply.created_by }} at {{ reply.created_at.date }}</p>
+        <a href="{% url 'forum:reply_update' pk=reply.pk %}">Edit</a>|
+        <a href="{% url 'forum:reply_delete' pk=reply.pk %}">Delete</a>
+    {% endfor %}
+{% endblock %}

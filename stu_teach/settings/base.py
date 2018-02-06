@@ -134,10 +134,24 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-LOGIN_REDIRECT_URL = 'forum:home'  # TODO add login redirect url
+LOGIN_REDIRECT_URL = 'forum:home'
 LOGIN_URL = 'auth_login'
 LOGOUT_URL = 'auth_logout'
 
 LOGIN_EXEMPT_VIEWS = [
     'landing_page',
+    'registration_register',
+    'registration_activation_complete',
+    'registration_resend_activation',
+    'registration_activate',
+    'registration_complete',
+    'registration_disallowed',
+    'auth_password_reset',
+    'auth_password_reset_complete',
+    'auth_password_reset_done',
+    'auth_password_reset_confirm',
+    'social:begin',
+    'social:complete',
+    'social:disconnect',
+    'social:disconnect_individual',
 ]
