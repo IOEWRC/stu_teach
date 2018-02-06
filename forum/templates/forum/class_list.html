@@ -3,7 +3,7 @@
 {% block title %}Class List{% endblock %}
 
 {% block content %}
-    <a class="button button1" href="{% url 'forum:class_create' %}">Create Class</a>
+    <a href="{% url 'forum:class_create' %}" class="btn btn-primary">Create Class</a>
     <table class="table">
         <thead class="thead-inverse">
         <tr>
@@ -25,10 +25,16 @@
                     <td class="align-middle"><a href="{% url 'view_others_profile' pk=cl.created_by.pk %}">{{ cl.created_by.get_full_name }}</a></td>
                     <td class="align-middle">{{ cl.created_at.date }}</td>
                     <td class="align-middle">{{ cl.question_set.count }}</td>
-                    <td class="align-middle">{% if cl.question_set.last %}<a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}{% else %}#{% endif %}</a> </td>  {# TODO #}
                     <td class="align-middle">
-                        <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a> /
-                        <a href="{% url 'forum:class_update' pk=cl.pk %}" class="btn btn-primary">Update</a>
+                        {% if cl.question_set.last %}
+                            <a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}</a><br>
+                            <small>{{ cl.question_set.last.created_at }}</small>
+                        {% else %}
+                            <p>No Question Yet!!!</p>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        <a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
