@@ -28,6 +28,7 @@ class Question(models.Model):
     votes = models.IntegerField(default=0)
     upvoted_by = models.ManyToManyField(User, related_name='question_upvoted')
     downvoted_by = models.ManyToManyField(User, related_name='question_downvoted')
+    files = models.FileField(upload_to='question_files', blank=True)
 
     def get_absolute_url(self):
         return reverse('forum:class_detail', kwargs={'pk': self.class_room.pk})  # TODO use question detail view

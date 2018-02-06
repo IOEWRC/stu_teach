@@ -34,7 +34,7 @@ class ClassDeleteView(DeleteView):
 
 class QuestionCreateView(CreateView):
     model = Question
-    fields = ['title', 'instruction', ]
+    fields = ['title', 'instruction', 'files', ]
     template_name = 'forum/question_create.html'
 
     def form_valid(self, form):

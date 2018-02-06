@@ -27,7 +27,8 @@
                     <td class="align-middle">{{ cl.question_set.count }}</td>
                     <td class="align-middle">
                         {% if cl.question_set.last %}
-                            <a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}</a>
+                            <a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}</a><br>
+                            <small>{{ cl.question_set.last.created_at }}</small>
                         {% else %}
                             <p>No Question Yet!!!</p>
                         {% endif %}
