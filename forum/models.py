@@ -37,21 +37,28 @@ class Question(models.Model):
         return self.title
 
 
-class Comment(models.Model):
+class Answer(models.Model):
     body = models.TextField()
-    post = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='comment_set')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_set')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer_set')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_set')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     votes = models.IntegerField(default=0)
-    upvoted_by = models.ManyToManyField(User, related_name='comment_upvoted')
-    downvoted_by = models.ManyToManyField(User, related_name='comment_downvoted')
+    upvoted_by = models.ManyToManyField(User, related_name='answer_upvoted')
+    downvoted_by = models.ManyToManyField(User, related_name='answer_downvoted')
+    files = models.FileField(upload_to='answer_files', blank=True)
+
+    def get_absolute_url(self):
+        return reverse('forum:question_detail', kwargs={'pk': self.question.pk})
 
 
 class Reply(models.Model):
     body = models.TextField()
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="reply_set")
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name="reply_set")
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reply_set")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     """Reaction todo"""  # TODO
+
+    def get_absolute_url(self):
+        return reverse('forum:answer_detail', kwargs={'pk': self.answer.pk})
