@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/', include('registration_redux.backends.default.urls')),
     path('', views.landing_page, name='landing_page'),
     path('auth/', include('social_django.urls', namespace='social')),
+    # path('class/', include('forum.join_urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'stu_teach.views.error_404'

@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}{{ class.name }}-Detail{% endblock %}
+{% block title %}{{ class.name }}Detail{% endblock %}
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
     <h1>{{ class.name }}</h1>
+    <h1>{{ class.code }}</h1>
     {% if class.class_avatar %}<img src="{{ class.class_avatar.url }}" alt="Class Avatar"/>{% endif %}
     <small><p>{{ class.description }}</p></small>
     <p>Teacher: <a href="{% url 'view_others_profile' pk=class.created_by.pk %}">{{ class.created_by.get_full_name }}</a></p>
@@ -21,9 +30,9 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include 'form-template.html' %}
             <button class="button button1">Create</button>
         </form>
       </div>

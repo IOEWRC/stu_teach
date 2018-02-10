@@ -24,7 +24,7 @@
       <div class="modal-body">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include 'form-template.html' %}
             <button class="button button1">Create</button>
         </form>
       </div>
