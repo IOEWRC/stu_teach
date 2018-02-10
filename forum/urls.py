@@ -21,5 +21,4 @@ urlpatterns = [
     # path('classes/answer/reply/<int:pk>/', views.ReplyCreateView.as_view(), name="reply_create"),
     path('classes/answer/reply/<int:pk>/delete/', views.ReplyDeleteView.as_view(), name="reply_delete"),
     path('classes/answer/reply/<int:pk>/update/', views.ReplyUpdateView.as_view(), name="reply_update"),
-    ]
-
+]

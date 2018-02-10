@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 #     model = Class
 #     context_object_name = 'classes'
 #     template_name = 'forum/class_list.html'
+
+
 class ClassListView(TemplateView):
     template_name = 'forum/class_list.html'
 
