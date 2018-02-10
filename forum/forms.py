@@ -1,5 +1,6 @@
 from .models import Class, Question, Answer, Reply
 from django.forms import ModelForm
+from django import forms
 
 
 class ClassCreateForm(ModelForm):
@@ -24,5 +25,9 @@ class ReplyCreateForm(ModelForm):
     class Meta:
         model = Reply
         fields = ['body',]
+
+
+class JoinForm(forms.Form):
+    code = forms.CharField()
 
 

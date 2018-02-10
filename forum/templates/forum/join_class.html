@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Join Class{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+  <a href="#popUp" id="openPopUp" aria-label="" style="position: fixed; bottom: 50pt; right: 10pt;">+</a>
+
+<!-- POP UP -->
+<aside id="popUp" class="popup">
+    <div class="popUpContainer">
+       <header>
+        <a href="#!" class="closePopUp">X</a>
+           <h3>Join Class</h3>
+       </header>
+      <article>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% include 'form-template.html' %}
+            <button class="button button1">Join</button>
+          </form>
+      </article>
+    </div>
+</aside>
+
+{% endblock %}

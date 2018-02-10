@@ -1,10 +1,11 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView, TemplateView
 from .models import Class, Question, Answer, Reply
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from .forms import (
-    ClassCreateForm, QuestionCreateForm, AnswerCreateForm, ReplyCreateForm
+    ClassCreateForm, QuestionCreateForm, AnswerCreateForm, ReplyCreateForm, JoinForm
 )
 from django.contrib.auth.models import User
 
@@ -26,14 +27,19 @@ class ClassListView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = ClassCreateForm(request.POST)
-        if form.is_valid():
-            classs = form.save(commit=False)
-            classs.created_by = request.user
-            classs.save()
+        try:
+            if form.is_valid():
+                classs = form.save(commit=False)
+                classs.created_by = request.user
+                classs.save()
+                messages.success(request, 'Class created successfully.')
+                return redirect('forum:class_detail', pk=classs.pk)
 
-            return redirect('forum:class_detail', pk=classs.pk)
-
-        args = {'form': form}
+        except Exception as e:
+            messages.warning(request, "Failed To Create. Error: {}".format(e))
+        messages.warning(request, "Failed To Create Check Errors")
+        classes = Class.objects.all()
+        args = {'form': form, 'classes': classes}
         return render(request, self.template_name, args)
 
 # class ClassCreateView(CreateView):
@@ -141,9 +147,9 @@ class ClassUpdateView(UpdateView):
     template_name = 'forum/class_update.html'
     fields = fields = ['name', 'description', 'class_avatar',]
 
-
-def home(request):
-    return render(request, 'forum/home.html', {'user': request.user, })
+#
+# def home(request):
+#     return render(request, 'forum/home.html', {'user': request.user, })
 
 
 # class AnswerCreateView(CreateView):
@@ -222,4 +228,29 @@ class ReplyDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('forum:answer_detail', kwargs={'pk': self.get_object().answer.pk})
+
+
+def home(request):
+    if request.method == 'POST':
+        form = JoinForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            try:
+                class_object = Class.objects.get(code=code)
+                if class_object:
+                    class_object.students.add(request.user)
+                    class_pk = class_object.pk
+                    messages.success(request, 'Welcome to Class')
+                    return redirect('forum:class_detail', pk=class_pk)
+            except Class.DoesNotExist:
+                form = JoinForm()
+        messages.warning(request, 'No class Found. Enter the correct invitation code.')
+        return render(request, 'forum/home.html', {'form': form})
+    else:
+        form = JoinForm()
+        return render(request, 'forum/home.html', {'form': form})
+
+
+
+
 
