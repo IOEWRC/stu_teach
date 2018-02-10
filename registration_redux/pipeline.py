@@ -1,4 +1,5 @@
 from social_core.backends.google import GoogleOAuth2
+from social_core.backends.github import GithubOAuth2
 
 
 def update_user_social_data(strategy, *args, **kwargs):
@@ -15,4 +16,9 @@ def update_user_social_data(strategy, *args, **kwargs):
             url = kwargs['response'].get('image').get('url')
             url = url.split('?')[0] + '?sz=500'
             user.profile.socio_auth_avatar = url
+    if isinstance(backend, GithubOAuth2):
+        if kwargs['response'].get('avatar_url'):
+            user.profile.socio_auth_avatar = kwargs['response'].get('avatar_url')
+        if kwargs['response'].get('location'):
+            user.profile.location = kwargs['response'].get('location')
     user.profile.save()
