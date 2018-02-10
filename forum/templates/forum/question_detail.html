@@ -8,7 +8,33 @@
     <a href="{% url 'forum:question_update' pk=question.pk %}">Edit</a>|
     <a href="{% url 'forum:question_delete' pk=question.pk %}">Delete</a>
     <hr>
-    <a href="{% url 'forum:answer_create' pk=question.pk%}">Answer Here</a>
+        <!-- Trigger the modal with a button -->
+<button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Answer Here</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="modal-title">Answer</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button button1">Create</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
     <h2>Answers:</h2>
     {% for answer in question.answer_set.all %}
         <p>{{ answer.body }}</p>

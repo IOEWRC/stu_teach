@@ -21,7 +21,8 @@ class LoginRequiredMiddleWare:
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         assert hasattr(request, 'user')
-        request_view = resolve(request.path_info).url_name
+        resolve_obj = resolve(request.path_info)
+        request_view = resolve_obj.namespace + ':' + resolve_obj.url_name if resolve_obj.namespace else resolve_obj.url_name
 
         if request.user.is_authenticated and (request_view in EXEMPT_VIEWS):
             return redirect(settings.LOGIN_REDIRECT_URL)

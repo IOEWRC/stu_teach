@@ -6,3 +6,4 @@ venv
 *.py[cod]
 *.env
 local.py
+*.http
