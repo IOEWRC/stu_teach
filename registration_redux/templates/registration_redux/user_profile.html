@@ -105,8 +105,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-3 col-lg-5 " align="center">
-                    {%if user.profile.avatar%}
-                        <img id="myImg" alt="{{user.first_name}}'s Profile Picture" src="{{user.profile.avatar.url}}" class="img-responsive img-fluid" width="300" height="200">
+                    {%if user.profile.avatar or user.profile.socio_auth_avatar%}
+                        <img id="myImg" alt="{{user.first_name}}'s Profile Picture" src="{{user.profile.get_avatar_url}}" class="img-responsive img-fluid" width="300" height="200">
                         <!-- The Modal -->
                         <div id="myModal" class="modal">
                           <span class="close">&times;</span>
