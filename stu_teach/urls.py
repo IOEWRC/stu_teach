@@ -22,7 +22,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('account/', include('accounts.urls')),
     path('home/', include('forum.urls')),
     path('account/', include('registration_redux.backends.default.urls')),
     path('', views.landing_page, name='landing_page'),
