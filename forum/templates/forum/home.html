@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>Teacher Student Discussion</p>
-<p>{{ user.username }}</p>
+    <h3>Started Classes</h3>
     {% if messages %}
         {% for message in messages %}
             <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
@@ -10,6 +9,27 @@
             </div>
         {% endfor %}
     {% endif %}
+
+    <div class="container-fluid">
+      <div class="row">
+        {% for class in s_classes %}
+            <div class="col-sm-6 col-md-3" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; margin:10px; padding:6px">
+                <div class="thumbnail">
+                    {% if class.class_avatar %}
+                        <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}" class="img-responsive" style="width:100%; height: 250px;/>
+                        {% else %}
+                             <img src="https://d32dm0rphc51dk.cloudfront.net/agDI-eAU_NkqpX7FRSUCDQ/larger.jpg" alt="{{ class.name }}" class="img-responsive" style="width:100%; height: 250px;/>
+                    {% endif %}
+                </div>
+                <div class="caption">
+                    <h2>{{ album.name }}</h2>
+                    <a href="{% url 'forum:class_detail' class.pk %}" class="button button1" role="button">Open</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
   <a href="#popUp" id="openPopUp" aria-label="" style="position: fixed; bottom: 50pt; right: 10pt;">+</a>
 
 <!-- POP UP -->

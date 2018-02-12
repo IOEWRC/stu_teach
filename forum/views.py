@@ -247,8 +247,11 @@ def home(request):
         messages.warning(request, 'No class Found. Enter the correct invitation code.')
         return render(request, 'forum/home.html', {'form': form})
     else:
+        selected_user = request.user
+        # joined_classes = Class.objects.filter(students=selected_user)
+        started_classes = Class.objects.filter(created_by=selected_user)
         form = JoinForm()
-        return render(request, 'forum/home.html', {'form': form})
+        return render(request, 'forum/home.html', {'form': form,  's_classes': started_classes})
 
 
 
