@@ -12,7 +12,7 @@ class Class(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='class_set')
     created_at = models.DateTimeField(auto_now_add=True)
     class_avatar = models.ImageField(upload_to='class_image', blank=True)
-    studencts = models.ManyToManyField(User, related_name='class_student')
+    students = models.ManyToManyField(User, related_name='class_student')
     code = models.CharField(max_length=12, blank=True)
 
     def get_absolute_url(self):

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3>Started Classes</h3>
     {% if messages %}
         {% for message in messages %}
             <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
@@ -9,7 +8,30 @@
             </div>
         {% endfor %}
     {% endif %}
-
+    <h3>JOiNED Classes</h3>
+<!--JOINED CLASS-->
+    <div class="container-fluid">
+      <div class="row">
+        {% for class in j_classes %}
+            <div class="col-sm-6 col-md-3" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; margin:10px; padding:6px">
+                <div class="thumbnail">
+                    {% if class.class_avatar %}
+                        <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}" class="img-responsive" style="width:100%; height: 250px;/>
+                    {% else %}
+                        <img src="https://blogs.studyinsweden.se/wp-content/uploads/2017/03/top-10-psychology-books-elearning-professional-read.jpg" class="img-responsive" style="width:100%; height: 250px;>
+                    {% endif %}
+                </div>
+                <div class="caption">
+                    <h5>Class Name: {{ class.name }}</h5>
+                    <h5>Teacher: {{ class.created_by }}</h5>
+                    <a href="{% url 'forum:class_detail' class.pk %}" class="button button1" role="button">Open</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <h3>Started Classes</h3>
+    <!-- YOUR CLASS -->
     <div class="container-fluid">
       <div class="row">
         {% for class in s_classes %}
@@ -18,11 +40,11 @@
                     {% if class.class_avatar %}
                         <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}" class="img-responsive" style="width:100%; height: 250px;/>
                         {% else %}
-                             <img src="https://d32dm0rphc51dk.cloudfront.net/agDI-eAU_NkqpX7FRSUCDQ/larger.jpg" alt="{{ class.name }}" class="img-responsive" style="width:100%; height: 250px;/>
+                        <img src="https://blogs.studyinsweden.se/wp-content/uploads/2017/03/top-10-psychology-books-elearning-professional-read.jpg" class="img-responsive" style="width:100%; height: 250px;>
                     {% endif %}
                 </div>
                 <div class="caption">
-                    <h2>{{ album.name }}</h2>
+                    <h2>{{ class.name }}</h2>
                     <a href="{% url 'forum:class_detail' class.pk %}" class="button button1" role="button">Open</a>
                 </div>
             </div>
@@ -48,4 +70,26 @@
       </article>
     </div>
 </aside>
+
+ <a href="#popUpC" id="openPopUp" aria-label="" style="position: fixed; bottom: 50pt; right: 40pt; border-right-style: solid">+ Class</a>
+
+<!-- POP UP -->
+<aside id="popUpC" class="popup">
+    <div class="popUpContainer">
+       <header>
+        <a href="#!" class="closePopUp">X</a>
+           <h3>Create Class</h3>
+       </header>
+      <article>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+              {% with c_form as form %}
+                {% include 'form-template.html' %}
+              {% endwith %}
+            <button class="button button1">+ Class</button>
+          </form>
+      </article>
+    </div>
+</aside>
+
 {% endblock %}
