@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
 
+    'stu_teach.middleware.AdminAccessMiddleware',
     'stu_teach.middleware.LoginRequiredMiddleWare',
 ]
 
