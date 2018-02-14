@@ -54,6 +54,7 @@ MIDDLEWARE = [
 
     'stu_teach.middleware.AdminAccessMiddleware',
     'stu_teach.middleware.LoginRequiredMiddleWare',
+    'stu_teach.middleware.ClassAccessMiddleware',
 ]
 
 ROOT_URLCONF = 'stu_teach.urls'
