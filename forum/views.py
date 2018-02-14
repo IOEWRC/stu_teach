@@ -8,6 +8,7 @@ from .forms import (
     ClassCreateForm, QuestionCreateForm, AnswerCreateForm, ReplyCreateForm, JoinForm
 )
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # class ClassListView(ListView):
@@ -233,7 +234,9 @@ class ReplyDeleteView(DeleteView):
 def home(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
-        if form.is_valid():
+        c_form = ClassCreateForm(request.POST, request.FILES)
+
+        if form and form.is_valid():
             code = form.cleaned_data['code']
             try:
                 class_object = Class.objects.get(code=code)
@@ -244,11 +247,35 @@ def home(request):
                     return redirect('forum:class_detail', pk=class_pk)
             except Class.DoesNotExist:
                 form = JoinForm()
-        messages.warning(request, 'No class Found. Enter the correct invitation code.')
-        return render(request, 'forum/home.html', {'form': form})
+            messages.warning(request, 'No class Found. Enter the correct invitation code.')
+            return render(request, 'forum/home.html', {'form': form, 'c_form': c_form})
+
+        else:
+            try:
+                if c_form.is_valid():
+                    if c_form.is_valid():
+                        classs = c_form.save(commit=False)
+                        classs.created_by = request.user
+                        classs.save()
+                        messages.success(request, 'Class created successfully.')
+                        return redirect('forum:class_detail', pk=classs.pk)
+            except Exception as e:
+                messages.warning(request, "Failed To Create. Error: {}".format(e))
+            messages.warning(request, "Failed To Create Check Errors")
+            return render(request, 'forum/home.html', {'form': form, 'c_form': c_form})
     else:
+        selected_user = request.user
+        joined_classes = Class.objects.filter(Q(students=selected_user))
+        started_classes = Class.objects.filter(created_by=selected_user)
         form = JoinForm()
-        return render(request, 'forum/home.html', {'form': form})
+        c_form = ClassCreateForm()
+        return render(request, 'forum/home.html', {'form': form,  's_classes': started_classes,
+                                                   'j_classes': joined_classes, 'c_form': c_form})
+
+
+
+
+
 
 
 
