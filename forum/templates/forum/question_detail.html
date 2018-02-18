@@ -37,6 +37,7 @@
 </div>
     <h2>Answers:</h2>
     {% for answer in question.answer_set.all %}
+
         <p>{{ answer.body }}</p>
         <p>{% if answer.files %}<a href="{{ answer.files.url }}">Attached Files</a>{% endif %}</p>
         <p>Answered By: {{ answer.created_by }} at  {{ answer.created_at.date }}</p>
