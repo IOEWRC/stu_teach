@@ -11,30 +11,30 @@
   {{error_message}}
 {% endif %}
 {% for field in form %}
-  <div class="form-group">
-    {{ field.label_tag }}
-    {% if field|is_file_field %}
-    {{ field }}
-    {% else %}
-        {% if form.is_bound %}
-      {% if field.errors %}
-        {% render_field field class="form-control is-invalid" %}
-        {% for error in field.errors %}
-          <div class="invalid-feedback">
-            {{ error }}
-          </div>
-        {% endfor %}
-      {% else %}
-        {% render_field field class="form-control is-valid" %}
-      {% endif %}
-    {% else %}
-      {% render_field field class="form-control" %}
-    {% endif %}
-    {% if field.help_text %}
-      <small class="form-text">
-        {{ field.help_text | safe }}
-      </small>
-    {% endif %}
-  {% endif %}
-  </div>
+    <div class="form-group">
+        {{ field.label_tag }}
+        {% if field|is_file_field %}
+            {{ field }}
+        {% else %}
+            {% if form.is_bound %}
+                {% if field.errors %}
+                    {% render_field field class="form-control is-invalid" %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% render_field field class="form-control is-valid" %}
+                {% endif %}
+            {% else %}
+                {% render_field field class="form-control" %}
+            {% endif %}
+            {% if field.help_text %}
+                <small class="form-text">
+                    {{ field.help_text | safe }}
+                </small>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endfor %}

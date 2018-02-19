@@ -8,7 +8,8 @@
             </div>
         {% endfor %}
     {% endif %}
-    <h3>JOiNED Classes</h3>
+    {% if j_classes %}
+    <h3>Joined Classes</h3>
 <!--JOINED CLASS-->
     <div class="container-fluid">
       <div class="row">
@@ -27,7 +28,14 @@
         {% endfor %}
         </div>
     </div>
-    <h3>Started Classes</h3>
+    {# paginator for joined class #}
+    {% with j_classes as list %}
+        {% include 'paginator_template.html' %}
+    {% endwith %}
+    {% endif %}
+
+    {% if s_classes %}
+    <h3>Your Classes</h3>
     <!-- YOUR CLASS -->
     <div class="container-fluid">
       <div class="row">
@@ -41,13 +49,51 @@
                     <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
                         <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
                         <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+
+                        {% if user == class.created_by %}
+                            <button type="button" class="follow" data-toggle="modal" data-target="#myModal">Delete</button>
+
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h3 class="modal-title">Delete this class?</h3>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form method="post" enctype="multipart/form-data" novalidate>
+                                        {% csrf_token %}
+                                        {% with del_form as form %}
+`                                           <input type="hidden" name="delete_class_pk" value="{{ class.pk }}">
+                                        {% endwith %}
+                                        <button class="button button1">Yes, Delete</button>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                        {% endif %}
+
                     </figcaption>
             </figure>
         {% endfor %}
         </div>
     </div>
+    {# paginator for joined class #}
+    {% with s_classes as list %}
+        {% include 'paginator_template.html' %}
+    {% endwith %}
+    {% endif %}
 
-  <a href="#popUp" id="openPopUp" aria-label="" style="position: fixed; bottom: 50pt; right: 10pt;">+</a>
+
+  <a href="#popUp" id="openPopUp" aria-label="" style="position: fixed; bottom: 50pt; right: 10pt;">+Join</a>
 
 <!-- POP UP -->
 <aside id="popUp" class="popup">
@@ -59,7 +105,9 @@
       <article>
           <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            {% include 'form-template.html' %}
+            {% with j_form as form %}
+                {% include 'form-template.html' %}
+            {% endwith %}
             <button class="button button1">Join</button>
           </form>
       </article>
