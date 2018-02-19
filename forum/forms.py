@@ -24,10 +24,12 @@ class AnswerCreateForm(ModelForm):
 class ReplyCreateForm(ModelForm):
     class Meta:
         model = Reply
-        fields = ['body',]
+        fields = ['body', ]
 
 
 class JoinForm(forms.Form):
     code = forms.CharField()
 
 
+class DeleteForm(forms.Form):
+    pass
