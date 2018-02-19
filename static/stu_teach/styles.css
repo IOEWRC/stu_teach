@@ -500,3 +500,40 @@ a#openPopUp:hover{
 body {
   background-color: #212121;
 }
+
+/*for question*/
+
+body{
+	background-color: #EFF8FF;
+}
+.main-section{
+	padding:15px;
+	background-color: antiquewhite;
+}
+.list-inline-item{
+	border-right:1px solid black;
+	padding-right:6px;
+	line-height:0.4em;
+}
+.list-inline-item:last-child{
+	border:none;
+}
+.post-detail ul{
+	margin-top:15px;
+}
+
+/*for circular image*/
+.circular--landscape {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular--landscape img {
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
+}
