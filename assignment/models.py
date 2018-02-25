@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
+from forum.models import Class
 
 
 class Assignment(models.Model):
@@ -12,6 +13,7 @@ class Assignment(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=50, default="")
     description = models.CharField(max_length=500)
+    classs = models.ForeignKey(Class, related_name='task', on_delete=models.CASCADE)
     # A Task can have many assignements
     assignments = models.ManyToManyField(Assignment, related_name="assignments")
     owner = models.ForeignKey(User, related_name="owner", on_delete=models.CASCADE)

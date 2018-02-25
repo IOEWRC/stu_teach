@@ -1,9 +1,10 @@
 {% extends 'assignment/base.html' %}
 {% load staticfiles %}
+{% load assignment_template_tags %}
 
 {% block content %}
 
-	{% if user.is_staff %}
+	{% if user|user_is_teacher:classs.pk %}
 
 	    {% include 'assignment/admin.html' with users=users tasks=tasks%}
 
@@ -16,7 +17,7 @@
 {% endblock %}
 
 {% block script %}
-{% if user.is_staff %}
+{% if user|user_is_teacher:classs.pk %}
 		<script src="{% static 'js/admin.js' %}"></script>
 {% else %}
 		<script src="{% static 'js/student.js' %}"></script>

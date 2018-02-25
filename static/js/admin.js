@@ -29,7 +29,7 @@ $("#saveButton").on("click", function() {
     // Create panel with saved task
     var spanHTML = "";
     for (var student in studentNames) {
-        spanHTML += '<span class="label label-success">' + student + '</span>'
+        spanHTML += '<span class="label label-success">' + studentNames[student] + '</span>'
     }
     panelHTML = '<div class="col-md-4"><div class="panel panel-primary">' +
         '<div class="panel-heading">' +
@@ -46,7 +46,8 @@ $("#saveButton").on("click", function() {
             name: $("#taskName").val(),
             description: $("#focusedInput").val(),
             csrfmiddlewaretoken: csrftoken,
-            students: studentIDs
+            students: studentIDs,
+            class_pk: $("#class_pk").val()
         },
         success: function(data) {
             $.notify(data.message, "info")

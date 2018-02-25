@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, Http404
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from .models import Task, Assignment
+from forum.models import Class
 
 
 # Create your views here.
@@ -15,15 +16,18 @@ class Home(LoginRequiredMixin, View):
     def __init__(self, **kwargs):
         pass
 
-    def get(self, request):
+    def get(self, request, pk):
         # Only fetch students
-        users = get_user_model().objects.filter(is_staff=False)
-        if request.user.is_superuser:
-            tasks = Task.objects.filter(owner=request.user)
+        classs = get_object_or_404(Class, pk=pk)
+        users = classs.students.all()
+        if request.user == classs.created_by:
+            tasks = Task.objects.filter(owner=request.user, classs=classs)
+        elif request.user in users:
+            tasks = Task.objects.filter(assignments__student=request.user, classs=classs)
         else:
-            tasks = Task.objects.filter(assignments__student=request.user)
+            raise Http404
         assignments = Assignment.objects.filter(student=request.user)
-        return render(request,self.template_name,{'users': users, 'tasks': tasks})
+        return render(request, self.template_name, {'users': users, 'tasks': tasks, 'classs': classs})
 
 
 class TaskView(View):
@@ -31,9 +35,10 @@ class TaskView(View):
         title = request.POST.get("name")
         description = request.POST.get("description")
         studentID = request.POST.getlist("students[]")
+        pk = request.POST.get("class_pk")
         # Create a new task
         user= request.user
-        newTask = Task(title=title, description=description, owner= user)
+        newTask = Task(title=title, description=description, owner=user, classs=Class.objects.get(pk=pk))
         newTask.save()
         students = get_user_model().objects.filter(id__in=studentID)
         # For assigned students create assignments
