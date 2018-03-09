@@ -8,6 +8,7 @@ from forum.models import Class
 class Assignment(models.Model):
     status = models.IntegerField(default=1)
     student = models.ForeignKey(User, related_name="student", on_delete=models.DO_NOTHING)
+    # description = models.TextField(blank=True)
 
 
 class Task(models.Model):

@@ -19,9 +19,9 @@ var actions = {
     1: "todo",
     2: "doing",
     3: "done",
-    4: "approoved",
-    5: "disapprooved"
-}
+    4: "approved",
+    5: "disapproved"
+};
 
 // Change labels to respective code
 $(".label-success").each(function() {
@@ -48,5 +48,10 @@ $(".dropdown-menu a").click(function() {
             $.notify(data.message, "info")
         }
     });
+});
 
+$(".saveButton").click(function () {
+    spanElem = $(this).parent().parent().parent().parent().parent().find('div.panel-heading').find('span.label.label-success');
+    console.log(spanElem);
+    spanElem.text("done");
 });
