@@ -53,8 +53,13 @@ class TaskView(View):
 class AssignmentView(View):
     def post(self, request):
         assignmentID = request.POST.get("assignmentID")
-        status = request.POST.get("status")
+        status = request.POST.get("status", None)
+        description = request.POST.get("description", None)
         assignment = Assignment.objects.get(id=int(assignmentID))
-        assignment.status = int(status)
+        if description:
+            assignment.description = description
+            assignment.status = 3  # 'done' status int value
+        if status:
+            assignment.status = int(status)
         assignment.save()
         return JsonResponse({"message": "Status Successfully Updated!"})
