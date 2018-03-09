@@ -325,3 +325,31 @@ def home(request):
             'c_form': c_form,
             'del_form': del_form,
         })
+
+
+def vote_question(request, operation, pk):
+    upvoted_user = request.user
+    answer = Answer.objects.get(pk=pk)
+    upvoted_users = answer.upvoted_by.all()
+    downvoted_users = answer.downvoted_by.all()
+
+    if operation == 'upvote':
+        if upvoted_user in downvoted_users:
+            answer.downvoted_by.remove(upvoted_user)
+            answer.upvote += 1
+            answer.save()
+        elif upvoted_user not in upvoted_users:
+            answer.upvoted_by.add(upvoted_user)
+            answer.upvote += 1
+            answer.save()
+    elif operation == 'downvote':
+        if upvoted_user in upvoted_users:
+            answer.upvoted_by.remove(upvoted_user)
+            answer.upvote -= 1
+            answer.save()
+        elif upvoted_user not in downvoted_users:
+            answer.downvoted_by.add(upvoted_user)
+            answer.upvote -= 1
+            answer.save()
+    return redirect('forum:class_detail', pk=answer.class_room.pk)
+

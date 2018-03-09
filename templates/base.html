@@ -30,9 +30,11 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle link-1" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-user"></span> {{ request.user.username }}
+                            <img src="{{ request.user.profile.get_avatar_url }}" height="35px" width="35px" style="border-radius: 50%">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                            <label class="dropdown-item" href="#"> {{ request.user.username }}<span class="fa fa-cog"></span> </label>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'view_self_profile' %}"><span class="fa fa-user-o"></span> Profile</a>
                             <a class="dropdown-item" href="{% url 'auth_password_change' %}">Change password</a>
                             <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>

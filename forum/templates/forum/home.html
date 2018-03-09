@@ -22,7 +22,7 @@
                 {% endif %}
                     <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
                         <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
-                        <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+                        <p>{{ class.description}}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
                     </figcaption>
             </figure>
         {% endfor %}
