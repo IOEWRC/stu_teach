@@ -19,9 +19,9 @@ var actions = {
     1: "todo",
     2: "doing",
     3: "done",
-    4: "approoved",
-    5: "disapprooved"
-}
+    4: "approved",
+    5: "disapproved"
+};
 
 // Change labels to respective code
 $(".label-success").each(function() {
@@ -33,8 +33,8 @@ $(".dropdown-menu a").click(function() {
     spanText = $(this).text();
     spanElem = $(this).parent().parent().parent().parent().find("span.label-success");
     spanElem.text(spanText);
-    assignmentID = $(spanElem).attr("assignment");
-    status = $(this).attr("status");
+    var assignmentID = $(spanElem).attr("assignment");
+    var status = $(this).attr("status");
     var csrftoken = getCookie('csrftoken');
     $.ajax({
         type: "POST",
@@ -48,5 +48,26 @@ $(".dropdown-menu a").click(function() {
             $.notify(data.message, "info")
         }
     });
+});
 
+$("#saveButton.btn.btn-primary").click(function () {
+    spanElem = $(this).parent().parent().parent().parent().parent().find('span.label-success');
+    spanElem.text("done");
+    var assignmentID = $(spanElem).attr("assignment");
+    var csrftoken = getCookie('csrftoken');
+    var description = $(this).parent().parent().find('textarea#focusedInput').val();
+    $.ajax({
+        type: "POST",
+        url: window.location.origin + "/assignment/assign/",
+        data: {
+            csrfmiddlewaretoken: csrftoken,
+            assignmentID: assignmentID,
+            description: description
+        },
+        success: function (data) {
+            $.notify(data.message, "info")
+        }
+    });
+    $(this).parent().parent().find('textarea#focusedInput').val("");
+    $(this).parent().parent().parent().parent().modal("toggle");
 });

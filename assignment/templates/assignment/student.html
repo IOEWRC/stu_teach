@@ -1,5 +1,4 @@
-<center>
-	<h3>Welcome to your task list</h3></center>
+<center><h3>Welcome to your task list</h3></center>
 <div class="container">
 	{% csrf_token %}
 	<div class="row form-group">
@@ -14,9 +13,7 @@
 					{% endif %}
 					{% endfor %}
 					<li class="dropdown" style="margin-left: 53%;margin-top: -12%;">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-		 Edit <span class="caret"></span>
-	 </a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Edit Status<span class="caret"></span></a>
 						<ul class="dropdown-menu" assignment="{{assignment.id}}">
 							<li><a href="#"></a></li>
 							<li><a href="#" status=1>todo</a></li>
@@ -27,8 +24,31 @@
 				</div>
 				<div class="panel-body">
 					{{task.description}}
-					<br />
+                    <br/>
+                    <a class="btn btn-primary" id="addTask" data-toggle="modal" data-target="#myModal{{ forloop.counter }}">Submit Assign</a>
 				</div>
+                <div class="modal" id="myModal{{ forloop.counter }}" style="margin-top:5%">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Task details</h4>
+                            </div>
+                            <div class="modal-body">
+                                {% csrf_token %}
+                                <div class="form-group has-warning">
+                                    <label class="control-label" for="focusedInput" style="color:black;">Description</label>
+                                    <textarea class="form-control" rows="5" id="focusedInput"></textarea>
+                                    <input type="hidden" id="class_pk" value="{{ classs.pk }}">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="saveButton">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 		{% endfor %}
