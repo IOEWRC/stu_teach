@@ -325,6 +325,14 @@ def home(request):
             'c_form': c_form,
             'del_form': del_form,
         })
+        del_form = DeleteForm()
+        return render(request, 'forum/home.html', {
+            'j_form': j_form,
+            's_classes': started_classes,
+            'j_classes': joined_classes,
+            'c_form': c_form,
+            'del_form': del_form,
+        })
 
 
 def vote_question(request, operation, pk):
