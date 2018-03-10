@@ -9,6 +9,7 @@ from .forms import (
     ClassCreateForm, QuestionCreateForm, AnswerCreateForm, ReplyCreateForm, JoinForm, DeleteForm
 )
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 
 # class ClassListView(ListView):
@@ -337,27 +338,33 @@ def home(request):
 
 def vote_question(request, operation, pk):
     upvoted_user = request.user
-    answer = Answer.objects.get(pk=pk)
-    upvoted_users = answer.upvoted_by.all()
-    downvoted_users = answer.downvoted_by.all()
+    question = get_object_or_404(Question, pk=pk)
+    upvoted_users = question.upvoted_by.all()
+    downvoted_users = question.downvoted_by.all()
 
-    if operation == 'upvote':
-        if upvoted_user in downvoted_users:
-            answer.downvoted_by.remove(upvoted_user)
-            answer.upvote += 1
-            answer.save()
-        elif upvoted_user not in upvoted_users:
-            answer.upvoted_by.add(upvoted_user)
-            answer.upvote += 1
-            answer.save()
-    elif operation == 'downvote':
-        if upvoted_user in upvoted_users:
-            answer.upvoted_by.remove(upvoted_user)
-            answer.upvote -= 1
-            answer.save()
-        elif upvoted_user not in downvoted_users:
-            answer.downvoted_by.add(upvoted_user)
-            answer.upvote -= 1
-            answer.save()
-    return redirect('forum:class_detail', pk=answer.class_room.pk)
+    try:
+        if operation == 'upvote':
+            if upvoted_user in downvoted_users:
+                question.downvoted_by.remove(upvoted_user)
+                question.votes += 1
+                question.save()
+            elif upvoted_user not in upvoted_users:
+                question.upvoted_by.add(upvoted_user)
+                question.votes += 1
+                question.save()
+        elif operation == 'downvote':
+            if upvoted_user in upvoted_users:
+                question.upvoted_by.remove(upvoted_user)
+                question.votes -= 1
+                question.save()
+            elif upvoted_user not in downvoted_users:
+                question.downvoted_by.add(upvoted_user)
+                question.votes -= 1
+                question.save()
+    except (KeyError, Answer.DoesNotExist):
+        return JsonResponse({'success': False})
+    else:
+        return JsonResponse({'success': True, 'votes': question.votes})
+
+    # return redirect('forum:class_detail', pk=question.class_room.pk)
 

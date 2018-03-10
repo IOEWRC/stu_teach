@@ -22,4 +22,5 @@ urlpatterns = [
     path('classes/answer/reply/<int:pk>/delete/', views.ReplyDeleteView.as_view(), name="reply_delete"),
     path('classes/answer/reply/<int:pk>/update/', views.ReplyUpdateView.as_view(), name="reply_update"),
     # path('class/join/', views.join_class, name='join')
+    path('classes/question/<slug:operation>/<int:pk>', views.vote_question, name='vote')
 ]
