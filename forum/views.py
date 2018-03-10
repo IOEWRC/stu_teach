@@ -9,6 +9,7 @@ from .forms import (
     ClassCreateForm, QuestionCreateForm, AnswerCreateForm, ReplyCreateForm, JoinForm, DeleteForm
 )
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 
 # class ClassListView(ListView):
@@ -54,10 +55,10 @@ class ClassListView(TemplateView):
 #         return super().form_valid(form)
 
 
-class ClassDetailView(DetailView):
-    model = Class
-    context_object_name = 'class'
-    template_name = 'forum/class_detail.html'
+# class ClassDetailView(DetailView):
+#     model = Class
+#     context_object_name = 'class'
+#     template_name = 'forum/class_detail.html'
 
 
 class ClassDetailView(TemplateView):
@@ -66,7 +67,8 @@ class ClassDetailView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = QuestionCreateForm()
         single_class = get_object_or_404(Class, pk=self.kwargs['pk'])
-        args = {'form': form, 'class': single_class}
+        questions = single_class.question_set.order_by('-votes')
+        args = {'form': form, 'class': single_class, 'questions': questions}
         return render(request, self.template_name, args)
 
     def post(self, request, *args, **kwargs):
@@ -325,3 +327,43 @@ def home(request):
             'c_form': c_form,
             'del_form': del_form,
         })
+        del_form = DeleteForm()
+        return render(request, 'forum/home.html', {
+            'j_form': j_form,
+            's_classes': started_classes,
+            'j_classes': joined_classes,
+            'c_form': c_form,
+            'del_form': del_form,
+        })
+
+
+def vote_question(request, operation, pk):
+    upvoted_user = request.user
+    question = get_object_or_404(Question, pk=pk)
+    upvoted_users = question.upvoted_by.all()
+    downvoted_users = question.downvoted_by.all()
+
+    try:
+        if operation == 'upvote':
+            if upvoted_user in downvoted_users:
+                question.downvoted_by.remove(upvoted_user)
+                question.votes += 1
+                question.save()
+            elif upvoted_user not in upvoted_users:
+                question.upvoted_by.add(upvoted_user)
+                question.votes += 1
+                question.save()
+        elif operation == 'downvote':
+            if upvoted_user in upvoted_users:
+                question.upvoted_by.remove(upvoted_user)
+                question.votes -= 1
+                question.save()
+            elif upvoted_user not in downvoted_users:
+                question.downvoted_by.add(upvoted_user)
+                question.votes -= 1
+                question.save()
+    except (KeyError, Answer.DoesNotExist):
+        return JsonResponse({'success': False})
+    else:
+        return JsonResponse({'success': True, 'votes': question.votes, 'id': str(question.id)})
+

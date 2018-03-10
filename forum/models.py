@@ -11,12 +11,12 @@ class Class(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='class_set')
     created_at = models.DateTimeField(auto_now_add=True)
-    class_avatar = models.ImageField(upload_to='class_image', default='/class_image/class_cover.jpg')
+    class_avatar = models.ImageField(upload_to='class_image', default='class_image/class_cover.jpg')
     students = models.ManyToManyField(User, related_name='class_student')
     code = models.CharField(max_length=12, blank=True)
 
     def get_absolute_url(self):
-        return reverse('forum:class_list')
+        return reverse('forum:class_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

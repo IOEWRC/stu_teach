@@ -1,11 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>{{ answer.body }}</p>
-    <p>{% if answer.files %}<a href="{{ answer.files.url }}">Attached Files</a>{% endif %}</p>
-    <p>Answered By: {{ answer.created_by }} at  {{ answer.created_at.date }}</p>
-    <a href="{% url 'forum:answer_update' pk=answer.pk %}">Edit</a>|
-    <a href="{% url 'forum:answer_delete' pk=answer.pk %}">Delete</a>
-    <hr>
+<div class="carousel-inner">
+    <div class="item active">
+      <img class="image" src="{{ answer.question.class_room.class_avatar.url }}" alt="Class Avatar">
+
+        <div class="hero">
+            <h1 data-heading="{{ answer.question.class_room.name }}">{{ class.name }}</h1>
+            <p class="text-block-footer col-sm-9"><span>{{ answer.question.class_room.description }}</span></p>
+            <figcaption><img class="profileUser" src="{{ answer.question.class_room.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" style="border-radius: 50%;" /></figcaption>
+            <div class="text-block">
+            {% if request.user == answer.question.class_room.created_by %}Class Code: {{ answer.question.class_room.code }}{% endif %}
+            <p>Teacher: <a href="{% url 'view_others_profile' pk=answer.question.class_room.created_by.pk %}">{{ answer.question.class_room.created_by }}</a>
+                {% if request.user == answer.question.class_room.created_by %}    <br><a href="{% url 'forum:class_update' pk=answer.question.class_room.pk %}">Edit</a>|
+                <a href="{% url 'forum:class_delete' pk=answer.question.class_room.pk %}">Delete</a></p>{% endif %}
+            </div>
+        </div>
+    </div>
+ </div><br>
+<div class="container main-section border">
+            <div class="col-lg-12 col-sm-12 col-12">
+                <div class="row">
+        <div class="col-lg-2 col-sm-2 col-5">
+            <img src="{{ answer.created_by.profile.get_avatar_url }}" class="circular--landscape" width="150px">
+        </div>
+        <div class="col-lg-10 col-sm-10 col-7">
+          <p>
+            {{ answer.body }}<br>
+            {% if answer.files %}<a href="{{ answer.files.url }}">Attached Files</a>{% endif %}
+
+          </p>
+        </div>
+      </div>
+      <div class="row post-detail">
+        <div class="col-lg-12 col-sm-12 col-12">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <img src="https://dummyimage.com/20x20/a8a1a8/0f0f12" class="rounded-circle" width="20px"> <span>by</span> <span class="text-info">{{ answer.created_by.username }}</span>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-calendar" aria-hidden="true"></i> <span>{{ answer.created_at.date  }}</span>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-share-square-o" aria-hidden="true"></i> <span class="text-info">{{ answer.reply_set.count }} Replies</span>
+                 {% if request.user == answer.created_by %}
+                      <a href="{% url 'forum:answer_update' pk=answer.pk %}">Edit</a>|
+                  <a href="{% url 'forum:answer_delete' pk=answer.pk %}">Delete</a>
+                  {% endif %}
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- Trigger the modal with a button -->
 <button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Reply Here</button>
 
@@ -35,9 +81,38 @@
 </div><br>
     Replies:<br>
     {% for reply in answer.reply_set.all %}
-        <p>{{ reply.body }}</p>
-        <p>Replied By: {{ reply.created_by }} at {{ reply.created_at.date }}</p>
-        <a href="{% url 'forum:reply_update' pk=reply.pk %}">Edit</a>|
-        <a href="{% url 'forum:reply_delete' pk=reply.pk %}">Delete</a>
+        <div class="container main-section border">
+            <div class="col-lg-12 col-sm-12 col-12">
+                <div class="row">
+        <div class="col-lg-2 col-sm-2 col-5">
+            <img src="{{ reply.created_by.profile.get_avatar_url }}" class="circular--landscape" width="150px">
+        </div>
+        <div class="col-lg-10 col-sm-10 col-7">
+          <p>
+            {{ reply.body }}
+          </p>
+        </div>
+      </div>
+      <div class="row post-detail">
+        <div class="col-lg-12 col-sm-12 col-12">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <img src="https://dummyimage.com/20x20/a8a1a8/0f0f12" class="rounded-circle" width="20px"> <span>by</span> <span class="text-info">{{ answer.created_by.username }}</span>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-calendar" aria-hidden="true"></i> <span>{{ reply.created_at.date  }}</span>
+              </li>
+              <li class="list-inline-item">
+                  {% if request.user == reply.created_by %}
+                      <a href="{% url 'forum:reply_update' pk=reply.pk %}">Edit</a>|
+                      <a href="{% url 'forum:reply_delete' pk=reply.pk %}">Delete</a>
+                  {% endif %}
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div><hr>
+
     {% endfor %}
 {% endblock %}
