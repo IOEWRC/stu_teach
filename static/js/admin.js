@@ -14,6 +14,20 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Action object for holding enumerated values
+var actions = {
+    3: "not reviewed",
+    4: "approved",
+    5: "disapproved"
+};
+
+// Change labels to respective code
+$(".label.label-success.reviewStatus").each(function() {
+    action = $(this).text();
+    $(this).text(actions[action]);
+});
+
+
 $('.selectpicker').selectpicker({
     style: 'btn-info',
     size: 4
@@ -58,4 +72,27 @@ $("#saveButton").on("click", function() {
     $("#focusedInput").val("");
     $(".selectpicker").selectpicker("deselectAll");
     $("#myModal").modal("toggle");
+});
+
+$(".dropdown-menu a").click(function () {
+    spanText = $(this).text();
+    spanElem = $(this).parent().parent().parent().parent().parent().find('span.label.label-success.reviewStatus');
+    spanElem.text(spanText);
+    var assignmentID = $(spanElem).attr("assignment");
+    var status = $(this).attr("status");
+    console.log(assignmentID);
+    console.log(status);
+    var csrftoken = getCookie('csrftoken');
+    $.ajax({
+        type: "POST",
+        url: window.location.origin + "/assignment/reviewassign/",
+        data: {
+            csrfmiddlewaretoken: csrftoken,
+            assignmentID: assignmentID,
+            status: status
+        },
+        success: function (data) {
+            $.notify(data.message, "info");
+        }
+    });
 });

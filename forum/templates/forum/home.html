@@ -23,6 +23,7 @@
                     <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
                         <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
                         <p>{{ class.description}}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+                        <a href="{% url 'assignment:assignment_home' pk=class.pk %}" class="follow">Assignment</a>
                     </figcaption>
             </figure>
         {% endfor %}
@@ -49,6 +50,7 @@
                     <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
                         <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
                         <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+                        <a href="{% url 'assignment:assignment_home' pk=class.pk %}">Assignment</a>
 
                         {% if user == class.created_by %}
                             <button type="button" class="follow" data-toggle="modal" data-target="#myModal">Delete</button>

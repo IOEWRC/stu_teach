@@ -63,3 +63,13 @@ class AssignmentView(View):
             assignment.status = int(status)
         assignment.save()
         return JsonResponse({"message": "Status Successfully Updated!"})
+
+
+class ReviewAssignmentStatus(View):
+    def post(self, request):
+        assignmentID = request.POST.get("assignmentID")
+        status = request.POST.get("status")
+        assignment = Assignment.objects.get(id=int(assignmentID))
+        assignment.status = int(status)
+        assignment.save()
+        return JsonResponse({"message": "Assignment Reviewed Successfully!"})

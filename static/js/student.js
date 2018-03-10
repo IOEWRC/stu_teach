@@ -33,8 +33,8 @@ $(".dropdown-menu a").click(function() {
     spanText = $(this).text();
     spanElem = $(this).parent().parent().parent().parent().find("span.label-success");
     spanElem.text(spanText);
-    assignmentID = $(spanElem).attr("assignment");
-    status = $(this).attr("status");
+    var assignmentID = $(spanElem).attr("assignment");
+    var status = $(this).attr("status");
     var csrftoken = getCookie('csrftoken');
     $.ajax({
         type: "POST",
