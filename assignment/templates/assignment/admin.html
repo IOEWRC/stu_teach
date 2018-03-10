@@ -1,0 +1,91 @@
+<div class="container">
+	<div class="row">
+		<div class="jumbotron">
+			<div class="row">
+				<p>This is the place to create tasks for students. Add a new Task by clicking below button</p>
+				<center><a class="btn btn-primary" id="addTask" data-toggle="modal" data-target="#myModal">Add Task</a></center>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="myModal" style="margin-top:5%">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Task details</h4>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group has-warning">
+						<label class="control-label" for="taskName" style="color:black;">Name</label>
+						<input type="text" class="form-control" id="taskName">
+						<label class="control-label" for="focusedInput" style="color:black;">Description</label>
+						<textarea class="form-control" rows="5" id="focusedInput"></textarea>
+						<label class="control-label" for="students" style="color:black;">Students</label>
+						<select class="selectpicker form-control" id="students" data-live-search="true" multiple>
+							{% for user in users %}
+							<option data-tokens="{{user.username}}" value={{user.id}}>{{user.username}}</option>
+							{% endfor %}
+						</select>
+                        <input type="hidden" id="class_pk" value="{{ classs.pk }}">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="saveButton">Save Task</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container attachData">
+	<div class="row">
+		{% for task in tasks %}
+		<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{task.title}}</h3>
+			</div>
+			<div class="panel-body">
+				{{task.description}}<br/>
+				{% for assignment in task.assignments.all %}
+                    {% if assignment.status == 3 or assignment.status == 4 or assignment.status == 5 %}
+                        <span class="label label-success" data-toggle="modal" data-target="#myModal{{ forloop.counter }}{{ forloop.parentloop.counter }}">{{assignment.student.username}}</span>
+                        <div class="modal" id="myModal{{ forloop.counter }}{{ forloop.parentloop.counter }}" style="margin-top:5%">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">{{ assignment.student.username }}'s Tasks details</h4>
+                                        <span assignment="{{ assignment.id }}" class="label label-success reviewStatus">{{ assignment.status }}</span>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Work:</h4>
+                                        <br/>
+                                        <p>{{ assignment.description }}</p>
+                                        <li class="dropdown" style="margin-left: 10%;margin-top: -1%">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Review<span class="caret"></span></a>
+                                            <ul class="dropdown-menu" assignment="{{ assignment.id }}">
+                                                <li><a href="#"></a></li>
+                                                <li><a href="#" status=4>approve</a></li>
+                                                <li><a href="#" status=5>unapprove</a></li>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <span class="label label-danger">{{assignment.student.username}}</span>
+                    {% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	    </div>
+		{% endfor %}
+	</div>
+</div>
