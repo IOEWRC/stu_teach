@@ -18,7 +18,7 @@ var Vote = {
                     type:"GET",
                     url:url,
                     success: function (data) {
-                        $('#votes_count').text(data['votes']);
+                        $('#votes_count'+ data['id']).text(data['votes']);
 
                     }
                 }
@@ -34,7 +34,7 @@ var Vote = {
                     type:"GET",
                     url:url,
                     success: function (data) {
-                        $('#votes_count').text(data['votes']);
+                        $('#votes_count'+ data['id']).text(data['votes']);
 
                     }
                 }

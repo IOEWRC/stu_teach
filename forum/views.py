@@ -55,10 +55,10 @@ class ClassListView(TemplateView):
 #         return super().form_valid(form)
 
 
-class ClassDetailView(DetailView):
-    model = Class
-    context_object_name = 'class'
-    template_name = 'forum/class_detail.html'
+# class ClassDetailView(DetailView):
+#     model = Class
+#     context_object_name = 'class'
+#     template_name = 'forum/class_detail.html'
 
 
 class ClassDetailView(TemplateView):
@@ -67,7 +67,8 @@ class ClassDetailView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = QuestionCreateForm()
         single_class = get_object_or_404(Class, pk=self.kwargs['pk'])
-        args = {'form': form, 'class': single_class}
+        questions = single_class.question_set.order_by('-votes')
+        args = {'form': form, 'class': single_class, 'questions': questions}
         return render(request, self.template_name, args)
 
     def post(self, request, *args, **kwargs):
@@ -364,7 +365,5 @@ def vote_question(request, operation, pk):
     except (KeyError, Answer.DoesNotExist):
         return JsonResponse({'success': False})
     else:
-        return JsonResponse({'success': True, 'votes': question.votes})
-
-    # return redirect('forum:class_detail', pk=question.class_room.pk)
+        return JsonResponse({'success': True, 'votes': question.votes, 'id': str(question.id)})
 

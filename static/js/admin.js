@@ -56,7 +56,6 @@ $("#saveButton").on("click", function() {
     // Reset modal
     $("#taskName").val("");
     $("#focusedInput").val("");
-    $(".selectpicker").selectpicker("deselectAll")
+    $(".selectpicker").selectpicker("deselectAll");
     $("#myModal").modal("toggle");
-
 });

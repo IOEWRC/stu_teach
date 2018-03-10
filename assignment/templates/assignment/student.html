@@ -25,9 +25,9 @@
 				<div class="panel-body">
 					{{task.description}}
                     <br/>
-                    <a class="btn btn-primary" id="addTask" data-toggle="modal" data-target="#myModal">Submit Assign</a>
+                    <a class="btn btn-primary" id="addTask" data-toggle="modal" data-target="#myModal{{ forloop.counter }}">Submit Assign</a>
 				</div>
-                <div class="modal" id="myModal" style="margin-top:5%">
+                <div class="modal" id="myModal{{ forloop.counter }}" style="margin-top:5%">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary saveButton">Submit</button>
+                                <button type="button" class="btn btn-primary" id="saveButton">Submit</button>
                             </div>
                         </div>
                     </div>

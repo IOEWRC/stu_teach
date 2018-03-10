@@ -50,8 +50,24 @@ $(".dropdown-menu a").click(function() {
     });
 });
 
-$(".saveButton").click(function () {
-    spanElem = $(this).parent().parent().parent().parent().parent().find('div.panel-heading').find('span.label.label-success');
-    console.log(spanElem);
+$("#saveButton.btn.btn-primary").click(function () {
+    spanElem = $(this).parent().parent().parent().parent().parent().find('span.label-success');
     spanElem.text("done");
+    var assignmentID = $(spanElem).attr("assignment");
+    var csrftoken = getCookie('csrftoken');
+    var description = $(this).parent().parent().find('textarea#focusedInput').val();
+    $.ajax({
+        type: "POST",
+        url: window.location.origin + "/assignment/assign/",
+        data: {
+            csrfmiddlewaretoken: csrftoken,
+            assignmentID: assignmentID,
+            description: description
+        },
+        success: function (data) {
+            $.notify(data.message, "info")
+        }
+    });
+    $(this).parent().parent().find('textarea#focusedInput').val("");
+    $(this).parent().parent().parent().parent().modal("toggle");
 });
