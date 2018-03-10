@@ -74,7 +74,7 @@ $("#saveButton").on("click", function() {
     $("#myModal").modal("toggle");
 });
 
-$(".dropdown-menu a").click(function () {
+$(".dropdown-menu.reviewList a").click(function () {
     spanText = $(this).text();
     spanElem = $(this).parent().parent().parent().parent().parent().find('span.label.label-success.reviewStatus');
     spanElem.text(spanText);
