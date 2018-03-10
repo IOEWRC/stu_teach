@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'accounts.apps.AccountsConfig',
+    'assignment.apps.AssignmentConfig',
     'forum.apps.ForumConfig',
     'widget_tweaks',
     'social_django'
