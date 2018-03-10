@@ -38,11 +38,7 @@
       <div class="row">
         {% for class in s_classes %}
            <figure class="snip1447">
-                {% if class.class_avatar %}
                 <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}" height="195px" width="320px"/>
-                    {% else %}
-                    <img src="https://blogs.studyinsweden.se/wp-content/uploads/2017/03/top-10-psychology-books-elearning-professional-read.jpg"  alt="{{ class.name }}" />
-                {% endif %}
                     <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
                         <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
                         <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>

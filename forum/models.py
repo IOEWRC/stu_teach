@@ -11,7 +11,7 @@ class Class(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='class_set')
     created_at = models.DateTimeField(auto_now_add=True)
-    class_avatar = models.ImageField(upload_to='class_image', default='static/images/class_cover.jpg')
+    class_avatar = models.ImageField(upload_to='class_image', default='media/class_image/class_cover.jpg')
     students = models.ManyToManyField(User, related_name='class_student')
     code = models.CharField(max_length=12, blank=True)
 
