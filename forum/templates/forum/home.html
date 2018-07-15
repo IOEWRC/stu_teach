@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if j_classes %}
+    <h3>Joined Classes</h3>
+<!--JOINED CLASS-->
+    <div class="container-fluid">
+      <div class="row">
+        {% for class in j_classes %}
+           <figure class="snip1447">
+                {% if class.class_avatar %}
+                <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}"/>
+                    {% else %}
+                    <img src="https://blogs.studyinsweden.se/wp-content/uploads/2017/03/top-10-psychology-books-elearning-professional-read.jpg"  alt="{{ class.name }}" />
+                {% endif %}
+                    <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
+                        <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
+                        <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+                    </figcaption>
+            </figure>
+        {% endfor %}
+        </div>
+    </div>
+    {# paginator for joined class #}
+    {% with j_classes as list %}
+        {% include 'paginator_template.html' %}
+    {% endwith %}
+    {% endif %}
+
+    {% if s_classes %}
+    <h3>Your Classes</h3>
+    <!-- YOUR CLASS -->
+    <div class="container-fluid">
+      <div class="row">
+        {% for class in s_classes %}
+           <figure class="snip1447">
+                {% if class.class_avatar %}
+                <img src="{{ class.class_avatar.url }}" alt="{{ class.name }}" height="195px" width="320px"/>
+                    {% else %}
+                    <img src="https://blogs.studyinsweden.se/wp-content/uploads/2017/03/top-10-psychology-books-elearning-professional-read.jpg"  alt="{{ class.name }}" />
+                {% endif %}
+                    <figcaption><img src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" />
+                        <h2>{{ class.name }}<span>By {{ class.created_by.username }}</span></h2>
+                        <p>{{ class.description }}</p><a href="{% url 'forum:class_detail' pk=class.pk %}" class="follow">Visit</a>
+
+                        {% if user == class.created_by %}
+                            <button type="button" class="follow" data-toggle="modal" data-target="#myModal">Delete</button>
+
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h3 class="modal-title" style="color: #1a1a1a">Delete this class? Really</h3>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form method="post" enctype="multipart/form-data" novalidate>
+                                        {% csrf_token %}
+                                        {% with del_form as form %}
+`                                           <input type="hidden" name="delete_class_pk" value="{{ class.pk }}">
+                                        {% endwith %}
+                                        <button class="button button1">Yes, Delete</button>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                        {% endif %}
+
+                    </figcaption>
+            </figure>
+        {% endfor %}
+        </div>
+    </div>
+    {# paginator for joined class #}
+    {% with s_classes as list %}
+        {% include 'paginator_template.html' %}
+    {% endwith %}
+    {% endif %}
+
+
+<!-- POP UP -->
+<aside id="popUp" class="popup">
+    <div class="popUpContainer">
+       <header>
+        <a href="#!" class="closePopUp">X</a>
+           <h3>Join Class</h3>
+       </header>
+      <article>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% with j_form as form %}
+                {% include 'form-template.html' %}
+            {% endwith %}
+            <button class="button button1">Join</button>
+          </form>
+      </article>
+    </div>
+</aside>
+
+<!-- POP UP -->
+<aside id="popUpC" class="popup">
+    <div class="popUpContainer">
+       <header>
+        <a href="#!" class="closePopUp">X</a>
+           <h3>Create Class</h3>
+       </header>
+      <article>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+              {% with c_form as form %}
+                {% include 'form-template.html' %}
+              {% endwith %}
+            <button class="button button1">+ Class</button>
+          </form>
+      </article>
+    </div>
+</aside>
+
+<!--for floating buttons-->
+
+<div id="container-floating">
+
+
+  <div class="nd3 nds" data-toggle="tooltip" data-placement="left" data-original-title="contract@gmail.com"><img class="reminder">
+    <p class="letter"><a href="#popUp" style="color: whitesmoke">J</a></p>
+  </div>
+
+  <div class="nd1 nds" data-toggle="tooltip" data-placement="left" data-original-title="Edoardo@live.it"><img class="reminder">
+    <p class="letter"><a href="#popUpC" >A</a>
+</p>
+  </div>
+
+  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()" style="position: fixed; bottom: 50pt; right: 0pt; border-right-style: solid">
+    <p class="plus">Class</p>
+    <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+  </div>
+
+</div>
+
+{% endblock %}

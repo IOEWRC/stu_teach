@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}{{ class.name }}Detail{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h1>{{ class.name }}</h1>
+    <h1>{{ class.code }}</h1>
+    {% if class.class_avatar %}<img src="{{ class.class_avatar.url }}" alt="Class Avatar"/>{% endif %}
+    <small><p>{{ class.description }}</p></small>
+    <p>Teacher: <a href="{% url 'view_others_profile' pk=class.created_by.pk %}">{{ class.created_by.get_full_name }}</a></p>
+    <p>Class Created At: {{ class.created_at }}</p>
+
+    <!-- Trigger the modal with a button -->
+<button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Ask Question</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="modal-title">Ask Question</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% include 'form-template.html' %}
+            <button class="button button1">Create</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    {% for question in class.question_set.all %}
+            <div class="container main-section border">
+            <div class="col-lg-12 col-sm-12 col-12">
+                <div class="row">
+        <div class="col-lg-2 col-sm-2 col-5">
+            <img src="{{ question.created_by.profile.get_avatar_url }}" class="circular--landscape" width="150px">
+        </div>
+        <div class="col-lg-10 col-sm-10 col-7">
+          <h4 class="text-primary">{{ question.title }}</h4>
+          <p>
+            {{ question.instruction }}
+          </p>
+        </div>
+      </div>
+      <div class="row post-detail">
+        <div class="col-lg-12 col-sm-12 col-12">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <img src="https://dummyimage.com/20x20/a8a1a8/0f0f12" class="rounded-circle" width="20px"> <span>by</span> <span class="text-info">{{ question.created_by.username }}</span>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-calendar" aria-hidden="true"></i> <span>{{ question.created_at.date  }}</span>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-comment" aria-hidden="true"></i><a href="{% url 'forum:question_detail' pk=question.pk %}"><span class="text-info">Answer</span></a>
+              </li>
+              <li class="list-inline-item">
+                <i class="fa fa-share-square-o" aria-hidden="true"></i> <span class="text-info">{{ question.answer_set.count }} Answers</span>
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+    <br>
+    {% endfor %}
+{% endblock %}

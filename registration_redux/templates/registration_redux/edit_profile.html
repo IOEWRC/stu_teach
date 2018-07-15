@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title%}Edit Profile{% endblock %}
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <br><br>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-sm-12 col-md-10">
+                <div class="card card-1">
+                    <h3 class="card-custom-header">Edit Profile</h3>
+                    <div class="card-body">
+                        <form method="post" novalidate enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% with user_form as form %}
+                                {% include 'form-template.html' %}
+                            {% endwith %}
+                            {% with profile_form as form %}
+                                {% include 'form-template.html' %}
+                            {% endwith %}
+                            <button type="submit" class="button button1 btn-dark" >Save changes</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <br><br>
+    </div>
+
+{% endblock %}

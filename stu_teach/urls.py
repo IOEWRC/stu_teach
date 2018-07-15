@@ -14,8 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('home/', include('forum.urls')),
+    path('account/', include('registration_redux.backends.default.urls')),
+    path('', views.landing_page, name='landing_page'),
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('assignment/', include('assignment.urls', namespace='assignment')),
+    # path('class/', include('forum.join_urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'stu_teach.views.error_404'
+handler500 = 'stu_teach.views.error_500'
+handler400 = 'stu_teach.views.error_400'
+handler403 = 'stu_teach.views.error_403'

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{ question.title }}</h1>
+    <p>Class room: {{ question.class_room.name }}</p>
+    <p>Instruction: {{ question.instruction }}</p>
+    <p>{% if question.files %}<a href="{{ question.files.url }}">Get files here.</a>{% endif %}</p>
+    <small>Question By: {{ question.created_by.get_full_name }} {{ question.created_at.date }}</small>
+    <a href="{% url 'forum:question_update' pk=question.pk %}">Edit</a>|
+    <a href="{% url 'forum:question_delete' pk=question.pk %}">Delete</a>
+    <hr>
+        <!-- Trigger the modal with a button -->
+<button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Answer Here</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="modal-title">Answer</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'form-template.html' %}
+            <button class="button button1">Create</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    <h2>Answers:</h2>
+    {% for answer in question.answer_set.all %}
+
+        <p>{{ answer.body }}</p>
+        <p>{% if answer.files %}<a href="{{ answer.files.url }}">Attached Files</a>{% endif %}</p>
+        <p>Answered By: {{ answer.created_by }} at  {{ answer.created_at.date }}</p>
+         <a href="{% url 'forum:answer_update' pk=answer.pk %}">Edit</a>|
+        <a href="{% url 'forum:answer_delete' pk=answer.pk %}">Delete</a>
+        <a href="{% url 'forum:answer_detail' pk=answer.pk %}">Reply</a>
+    {% endfor %}
+{% endblock %}

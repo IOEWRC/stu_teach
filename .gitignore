@@ -1,3 +1,9 @@
 .idea
 venv
-*.xml
+*.sqlite3
+**/__pycache__/
+**/media/
+*.py[cod]
+*.env
+local.py
+*.http

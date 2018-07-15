@@ -1,0 +1,21 @@
+{% extends "registration_redux/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Logged out" %}{% endblock %}
+
+{% block content %}
+  <br><br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-8">
+        <div class="card card-1">
+          <h3 class="card-custom-header">LOG IN</h3>
+          <div class="card-body">
+            <p>{% trans "Successfully logged out" %}.</p>
+            <div class="card-custom-footer"><p><a href="{% url 'auth_login' %}" class="button button1" style="border-radius: 25%;margin-top: 15px;">Log In here</a></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

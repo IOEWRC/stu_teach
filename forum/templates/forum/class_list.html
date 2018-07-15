@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Class List{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %} role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Trigger the modal with a button -->
+<button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Create Class</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="modal-title">Create CLass</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% include 'form-template.html' %}
+            <button class="button button1">Create</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Classes</th>
+            <th>Teacher</th>
+            <th>Created At</th>
+            <th>Questions</th>
+            <th>Last Question</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cl in classes %}
+                <tr>
+                    <td>
+                        <a href="{% url 'forum:class_detail' pk=cl.pk %}">{{ cl.name }}</a>
+                        <small class="text-muted d-block">{{ cl.description }}</small>
+                    </td>
+                    <td class="align-middle"><a href="{% url 'view_others_profile' pk=cl.created_by.pk %}">{{ cl.created_by.get_full_name }}</a></td>
+                    <td class="align-middle">{{ cl.created_at.date }}</td>
+                    <td class="align-middle">{{ cl.question_set.count }}</td>
+                    <td class="align-middle">
+                        {% if cl.question_set.last %}
+                            <a href="{% url 'forum:question_detail' pk=cl.question_set.last.pk %}">{{ cl.question_set.last.title }}</a><br>
+                            <small>{{ cl.question_set.last.created_at }}</small>
+                        {% else %}
+                            <p>No Question Yet!!!</p>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        <a href="{% url 'forum:class_update' pk=cl.pk %}" class="btn btn-primary">Update</a>|<a href="{% url 'forum:class_delete' pk=cl.pk %}" class="btn btn-primary">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
