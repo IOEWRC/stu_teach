@@ -9,12 +9,26 @@
             </div>
         {% endfor %}
     {% endif %}
-    <h1>{{ class.name }}</h1>
-    <h1>{{ class.code }}</h1>
-    {% if class.class_avatar %}<img src="{{ class.class_avatar.url }}" alt="Class Avatar"/>{% endif %}
-    <small><p>{{ class.description }}</p></small>
-    <p>Teacher: <a href="{% url 'view_others_profile' pk=class.created_by.pk %}">{{ class.created_by.get_full_name }}</a></p>
-    <p>Class Created At: {{ class.created_at }}</p>
+
+ <div class="carousel-inner">
+    <div class="item active">
+      {% if class.class_avatar %}<img class="image" src="{{ class.class_avatar.url }}" alt="Class Avatar">{% endif %}
+
+        <div class="hero">
+            <h1 data-heading="{{ class.name }}">{{ class.name }}</h1>
+            <p class="text-block-footer col-sm-9"><span>{{ class.description }}</span></p>
+            <figcaption><img class="profileUser" src="{{ class.created_by.profile.get_avatar_url }}" alt="{{ class.created_by.get_fullname }}" class="profile" style="border-radius: 50%;" /></figcaption>
+            <div class="text-block">
+            {% if request.user == class.created_by %}Class Code: {{ class.code }}{% endif %}
+            <p>Teacher: <a href="{% url 'view_others_profile' pk=class.created_by.pk %}">{{ class.created_by }}</a>
+               {% if request.user == class.created_by %}<br><a href="{% url 'forum:class_update' pk=class.pk %}">Edit</a>|
+                <a href="{% url 'forum:class_delete' pk=class.pk %}">Delete</a></p>{% endif %}
+            </p>
+        </div>
+        </div>
+    </div>
+ </div>
+
 
     <!-- Trigger the modal with a button -->
 <button type="button" class="button button1" data-toggle="modal" data-target="#myModal">Ask Question</button>
@@ -43,14 +57,20 @@
 
   </div>
 </div>
-    {% for question in class.question_set.all %}
+    {% for question in questions %}
             <div class="container main-section border">
             <div class="col-lg-12 col-sm-12 col-12">
                 <div class="row">
+                    <div class="col-md-1">
+                  <br>
+                        <a href="{% url 'forum:vote' operation='upvote' pk=question.pk %}" class="upvote"><span class="fa fa-chevron-up {% if request.user in question.upvoted_by.all %}active{% endif %}"></span></a><br>
+                    <b id="votes_count{{ question.id }}">{{question.votes}}</b><br>
+                  <a href="{% url 'forum:vote' operation='downvote' pk=question.pk %}" class="downvote"><span class="fa fa-chevron-down {% if request.user in question.downvoted_by.all %}active{% endif %}"></span></a>
+                </div>
         <div class="col-lg-2 col-sm-2 col-5">
             <img src="{{ question.created_by.profile.get_avatar_url }}" class="circular--landscape" width="150px">
         </div>
-        <div class="col-lg-10 col-sm-10 col-7">
+        <div class="col-lg-9 col-sm-9 col-6">
           <h4 class="text-primary">{{ question.title }}</h4>
           <p>
             {{ question.instruction }}
@@ -71,6 +91,10 @@
               </li>
               <li class="list-inline-item">
                 <i class="fa fa-share-square-o" aria-hidden="true"></i> <span class="text-info">{{ question.answer_set.count }} Answers</span>
+                  {% if request.user == question.created_by %}
+                      <a href="{% url 'forum:question_update' pk=question.pk %}"><span class="text-info">Edit</span></a>|
+                      <a href="{% url 'forum:question_delete' pk=question.pk %}"><span class="text-info">Delete</span></a>
+                  {% endif %}
               </li>
             </ul>
         </div>

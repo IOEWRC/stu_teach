@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="{% static 'stu_teach/styles.css' %}" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.7/typicons.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <script src="{% static 'js/vote.js' %}"></script>
     {%block css%}{%endblock%}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -29,9 +31,11 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle link-1" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-user"></span> {{ request.user.username }}
+                            <img src="{{ request.user.profile.get_avatar_url }}" height="35px" width="35px" style="border-radius: 50%">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                            <label class="dropdown-item" href="#"> {{ request.user.username }}<span class="fa fa-cog"></span> </label>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'view_self_profile' %}"><span class="fa fa-user-o"></span> Profile</a>
                             <a class="dropdown-item" href="{% url 'auth_password_change' %}">Change password</a>
                             <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
@@ -68,7 +72,7 @@
 </footer>
 </body>
 {%block script%}{%endblock%}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="{% static 'js/bootstrap-select.min.js' %}"></script>

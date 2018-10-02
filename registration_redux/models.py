@@ -35,7 +35,8 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='profile_image', blank=True)
     socio_auth_avatar = models.URLField(max_length=400, blank=True, default='https://www.gravatar.com/avatar/4309fdf1236a9cf2cd87f90a87cee8a9?d=mm&s=256')
-    user_type = models.CharField(max_length=50, choices=(('STUDENT', 'Student'), ('TEACHER', 'Teacher')))  # TODO find field for user_type
+    # user_type = models.CharField(max_length=50, choices=(('STUDENT', 'Student'), ('TEACHER', 'Teacher')))  # TODO
+    # find field for user_type
 
     def __str__(self):
         return self.user.username
