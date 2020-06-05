@@ -5,7 +5,7 @@ confusable-homoglyphs==3.0.0
 defusedxml==0.5.0
 dj-database-url==0.4.2
 dj-static==0.0.6
-Django==2.0.1
+Django==2.2.13
 django-b2storage==1.0
 django-widget-tweaks==1.4.1
 gunicorn==19.7.1
